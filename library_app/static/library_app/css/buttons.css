@@ -1,0 +1,47 @@
+.cta-button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.cta-button .btn-home {
+    padding: 10px 20px;
+    background-color: #ff1654;
+    color: #fff;
+}
+
+.cta-button .btn-home:hover {
+    background-color: #ff1654;
+}
+
+.cta-button .btn-register {
+    padding: 10px 20px;
+    background-color: #ea0e46;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    transition: transform 0.3s, background-color 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+.cta-button .btn-register:hover {
+    background-color: #6b1a30;
+    transform: scale(1.1);
+}
+
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links a {
+    color: #ff1654;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1rem;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
