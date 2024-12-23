@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'Library.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'webwizard',
+        'NAME': 'webwizard_back',
         'USER': 'root',
         'PASSWORD': 'BodnarR09052005',
         'HOST': '127.0.0.1',
