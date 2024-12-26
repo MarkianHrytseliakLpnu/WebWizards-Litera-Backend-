@@ -1,4 +1,3 @@
-/* header.css */
 .logo-container {
     background-color: #1b1b1b;
     padding: 10px 15px;
@@ -15,14 +14,6 @@
 .logo img {
     max-width: 75%;
     height: auto;
-}
-
-
-nav {
-    background-color: #2c2c2c;
-    border-radius: 8px;
-    margin-top: 10px;
-    padding: 10px 0;
 }
 
 nav ul {
