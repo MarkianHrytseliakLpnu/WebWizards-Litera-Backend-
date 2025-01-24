@@ -19,14 +19,46 @@ class Location(models.Model):
         return self.name
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Author(models.Model):
+    full_name = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.full_name
+
+
+class Publishing(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
 class Book(models.Model):
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200)
-    author = models.CharField(max_length=100)
-    publishing = models.CharField(max_length=100)
+    authors = models.ManyToManyField('Author', related_name='books')
+    publishing = models.ForeignKey(Publishing, on_delete=models.SET_NULL, null=True)
     year_of_publication = models.PositiveIntegerField()
     language = models.CharField(max_length=50)
     number_of_pages = models.PositiveIntegerField()
+    categories = models.ManyToManyField('Category', related_name='books')
 
     def __str__(self):
         return self.name

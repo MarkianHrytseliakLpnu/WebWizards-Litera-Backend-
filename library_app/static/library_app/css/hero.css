@@ -1,0 +1,39 @@
+/* hero.css */
+.hero {
+    text-align: center;
+    padding: 100px 30px;
+    background-color: #5c5c5b;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-image: url('../images/image.png');
+}
+
+.quote {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #ea0e46;
+}
+
+.quote span {
+    font-style: italic;
+    color: #fff;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px 20px;
+    background-color: #1b1b1b;
+}
+
+.features-text ul {
+    list-style: none;
+    font-size: 1.2rem;
+    color: #bbb;
+    max-width: 600px;
+}
+
+.features-text ul li {
+    margin-bottom: 15px;
+}

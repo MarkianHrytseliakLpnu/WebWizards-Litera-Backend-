@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація - LITERA</title>
+    <link rel="stylesheet" href="{% static 'library_app/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/user.css' %}">
+</head>
+<body>
+    <div class="registration-container">
+        <h1>Реєстрація</h1>
+        <form action="{% url 'user_register' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Ім'я користувача:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Електронна пошта:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Підтвердіть пароль:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <div class="cta-button">
+                <button type="submit" class="btn-register">Зареєструватися</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

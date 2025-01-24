@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Книги{% endblock %}
+{% block header %}Список Книг{% endblock %}
+{% block content %}
+    <table>
+        <thead>
+            <tr>
+                <th>Назва</th>
+                <th>Автори</th>
+                <th>Видавництво</th>
+                <th>Рік видання</th>
+                <th>Мова</th>
+                <th>Кількість сторінок</th>
+                <th>Категорії</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.name }}</td>
+                <td>
+                    {% for author in book.authors.all %}
+                        {{ author.full_name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ book.publishing.name }}</td>
+                <td>{{ book.year_of_publication }}</td>
+                <td>{{ book.language }}</td>
+                <td>{{ book.number_of_pages }}</td>
+                <td>
+                    {% for category in book.categories.all %}
+                        {{ category.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LITERA - Твій путівник у світі книг{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'library_app/css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/hero.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/book.css' %}">
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{% static 'library_app/images/litera.png' %}" alt="Логотип LITERA">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Головна</a></li>
+                <li><a href="#">Локації</a></li>
+                <li><a href="#">Відгуки</a></li>
+                <li><a href="{% url 'book' %}">Книги</a></li>
+                <li><a href="#">Оренда</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <footer>
+        <div class="social-links">
+            <a href="https://x.com" target="_blank">X</a>
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+            <a href="https://telegram.org" target="_blank">Telegram</a>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+        </div>
+        <p>&copy; 2024 LITERA. Всі права захищені.</p>
+    </footer>
+</body>
+</html>
