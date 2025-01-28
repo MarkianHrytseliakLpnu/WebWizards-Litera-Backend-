@@ -208,6 +208,11 @@ class BooksView(View):
         books = Book.objects.all()
         return render(request, 'book.html', {'books': books})
 
+class LocationsView(View):
+    def get(self, request):
+        locations = Location.objects.all()
+        return render(request, 'locations.html', {'locations': locations})
+
 class UserRegisterView(View):
     def get(self, request):
         return render(request, 'user_register.html')

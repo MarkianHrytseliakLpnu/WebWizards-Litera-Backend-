@@ -5,13 +5,14 @@ from .views import (
     BookListCreateView, BookDetailView,
     TradeLogListCreateView, TradeLogDetailView,
     ReviewListCreateView, ReviewDetailView,
-    HomeView, BooksView, UserRegisterView
+    HomeView, BooksView, LocationsView, UserRegisterView
 )
 
 urlpatterns = [
     # Основні URL
     path('', HomeView.as_view(), name='home'),
     path('books/', BooksView.as_view(), name='book'),
+    path('locations/', LocationsView.as_view(), name='locations'),
     path('register/', UserRegisterView.as_view(), name='user_register'),
 
     # API URL
