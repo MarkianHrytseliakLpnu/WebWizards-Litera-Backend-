@@ -1,5 +1,4 @@
 /* BASIC */
-
 html {
   background-color: #000000;
 }
@@ -89,37 +88,31 @@ h2.inactive {
 
 h2.active {
   color: #fff;
-  border-bottom: 2px solid #6b1a30;
+  border-bottom: 2px solid #ae1840;
   font-family: "Courier New", monospace;
 }
 
 /* FORM TYPOGRAPHY*/
 
-input[type=button], input[type=submit], input[type=reset]  {
-  background-color: #ff1654;
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #6b1a30;
   border: none;
   color: white;
   padding: 15px 80px;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(255, 22, 84, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(255, 22, 84, 0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
+  border-radius: 5px;
   margin: 5px 20px 40px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   font-family: "Courier New", monospace;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-  background-color: #6b1a30;
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+  background-color: #ae1840;
+  transform: scale(1.05);
 }
 
 input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
@@ -130,12 +123,24 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
+.name-surname-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.name-surname-container input {
+  width: 50%;
+  margin: 0;
+  text-align: left;
+}
+
 input[type=text], input[type=password] {
   background-color: #444444;
   border: none;
   color: #fff;
-  padding: 15px 32px;
-  text-align: center;
+  padding: 15px 10px;
+  text-align: left;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
@@ -154,10 +159,74 @@ input[type=text], input[type=password] {
 
 input[type=text]:focus, input[type=password]:focus {
   background-color: #555555;
-  border-bottom: 2px solid #6b1a30;
+  border-bottom: 2px solid #fff;
 }
 
 input[type=text]::placeholder, input[type=password]::placeholder {
+  color: #cccccc;
+  font-family: "Courier New", monospace;
+}
+
+input[type=tel] {
+  background-color: #444444;
+  border: none;
+  color: #fff;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #444444;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  font-family: "Courier New", monospace;
+}
+
+input[type=tel]:focus {
+  background-color: #555555;
+  border-bottom: 2px solid #fff;
+}
+
+input[type=tel]::placeholder {
+  color: #cccccc;
+  font-family: "Courier New", monospace;
+}
+
+input[type=email] {
+  background-color: #444444;
+  border: none;
+  color: #fff;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #444444;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  font-family: "Courier New", monospace;
+}
+
+input[type=email]:focus {
+  background-color: #555555;
+  border-bottom: 2px solid #fff;
+}
+
+input[type=email]::placeholder {
   color: #cccccc;
   font-family: "Courier New", monospace;
 }

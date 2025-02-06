@@ -8,7 +8,12 @@
 
     <!-- Register Form -->
     <form>
-        <label for="register_login"></label><input type="text" id="register_login" class="fadeIn second" name="register_login" placeholder="Ім'я користувача">
+        <div class="name-surname-container">
+            <label for="register_login_name"></label><input type="text" id="register_login_name" class="fadeIn second" name="register_login_name" placeholder="Ім'я">
+            <label for="register_login_surname"></label><input type="text" id="register_login_surname" class="fadeIn second" name="register_login_surname" placeholder="Прізвище">
+        </div>
+        <label for="register_email"></label><input type="email" id="register_email" class="fadeIn second" name="register_email" placeholder="Пошта">
+        <label for="register_phone_number"></label><input type="tel" id="register_phone_number" class="fadeIn third" name="register_phone_number" placeholder="Номер телефону">
         <label for="register_password"></label><input type="password" id="register_password" class="fadeIn third" name="register_password" placeholder="Пароль">
         <label for="register_password_confirm"></label><input type="password" id="register_password_confirm" class="fadeIn third" name="register_password_confirm" placeholder="Підтвердження пароля">
         <input type="submit" class="fadeIn fourth" value="Зареєструватися">
