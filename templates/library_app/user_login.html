@@ -1,0 +1,23 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'library_app/css/user_login.css' %}">
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="active"><a href="/login/" class="underlineHover">Увійти</a></h2>
+    <h2 class="inactive underlineHover"><a href="/register/" class="underlineHover">Зареєструватися</a></h2>
+
+
+    <!-- Login Form -->
+    <form>
+        <label for="login"></label><input type="text" id="login" class="fadeIn second" name="login" placeholder="Ім'я користувача">
+        <label for="password"></label><input type="text" id="password" class="fadeIn third" name="login" placeholder="Пароль">
+      <input type="submit" class="fadeIn fourth" value="Увійти">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Забули пароль?</a>
+    </div>
+
+  </div>
+</div>
