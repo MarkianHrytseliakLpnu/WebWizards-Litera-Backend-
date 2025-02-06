@@ -4,10 +4,10 @@ from django.views import View
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .models import Book, TradeLog, Review
+from .models import Book, TradeLog, Review, User
 from .serializers import UserSerializer, BookSerializer, TradeLogSerializer, ReviewSerializer
 
 
@@ -22,22 +22,47 @@ class BooksView(View):
         return render(request, 'book.html', {'books': books})
 
 
-class UserRegisterView(View):
-    def get(self, request):
-        return render(request, 'user_register.html')
+class RegistrationView(generics.CreateAPIView):
+    """
+    View для реєстрації нового користувача.
+    За замовчуванням створюється звичайний користувач. 
+    Щоб створити адміністратора, в JSON передайте "is_staff": true.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    def post(self, request):
-        serializer = UserSerializer(data=request.POST)
-        if serializer.is_valid():
-            serializer.save()
-            return redirect('home')
+
+class LoginView(APIView):
+    """
+    View для логіна користувача.
+    Очікує POST запит з полями "email" та "password".
+    """
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        if not email or not password:
+            return Response(
+                {"error": "Потрібно вказати email та пароль."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response(
+                {"error": "Невірний email або пароль."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if user.check_password(password):
+            serializer = UserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return HttpResponse(f"Помилка: {serializer.errors}", status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserLoginView(View):
-    def get(self, request):
-        return render(request, 'user_login.html')
+            return Response(
+                {"error": "Невірний email або пароль."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 # ---------- Books Endpoints ----------
