@@ -35,6 +35,11 @@ class UserRegisterView(View):
             return HttpResponse(f"Помилка: {serializer.errors}", status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserLoginView(View):
+    def get(self, request):
+        return render(request, 'user_login.html')
+
+
 # ---------- Books Endpoints ----------
 
 class BookListCreateView(APIView):
