@@ -35,11 +35,12 @@ nav ul li a {
     padding: 6px;
     display: block;
     text-align: center;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
     border-radius: 7px;
 }
 
 nav ul li a:hover {
-    color: #ae1840;
+    color: #ea0e46;
     background-color: rgba(80, 80, 80, 0.2);
     border-radius: 7px;
     transform: scale(1.05);
