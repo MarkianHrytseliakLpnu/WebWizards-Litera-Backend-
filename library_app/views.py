@@ -7,6 +7,10 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import RegistrationForm, LoginForm
+
 from .models import Book, TradeLog, Review, User
 from .serializers import UserSerializer, BookSerializer, TradeLogSerializer, ReviewSerializer
 
@@ -22,47 +26,44 @@ class BooksView(View):
         return render(request, 'book.html', {'books': books})
 
 
-class RegistrationView(generics.CreateAPIView):
+def register_view(request):
     """
-    View для реєстрації нового користувача.
-    За замовчуванням створюється звичайний користувач. 
-    Щоб створити адміністратора, в JSON передайте "is_staff": true.
+    View для реєстрації користувача.
+    При GET запиті показує форму, при POST — обробляє дані.
     """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            raw_password = form.cleaned_data.get('password')
+            user.set_password(raw_password)
+            user.save()
+            messages.success(request, "Реєстрація пройшла успішно!")
+            return redirect('login')
+        else:
+            messages.error(request, "Виправте помилки у формі, будь ласка.")
+    else:
+        form = RegistrationForm()
+    return render(request, 'user_register.html', {'form': form})
 
 
-class LoginView(APIView):
+def login_view(request):
     """
     View для логіна користувача.
-    Очікує POST запит з полями "email" та "password".
+    При GET запиті показує форму, при POST обробляє дані логіна.
     """
-    def post(self, request, *args, **kwargs):
-        email = request.data.get('email')
-        password = request.data.get('password')
-
-        if not email or not password:
-            return Response(
-                {"error": "Потрібно вказати email та пароль."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            return Response(
-                {"error": "Невірний email або пароль."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        if user.check_password(password):
-            serializer = UserSerializer(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data.get('user')
+            request.session['user_id'] = user.id
+            messages.success(request, "Вхід виконано успішно!")
+            return redirect('home')
         else:
-            return Response(
-                {"error": "Невірний email або пароль."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            messages.error(request, "Невірний email або пароль.")
+    else:
+        form = LoginForm()
+    return render(request, 'user_login.html', {'form': form})
 
 
 # ---------- Books Endpoints ----------
