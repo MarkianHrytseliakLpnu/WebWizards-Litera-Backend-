@@ -29,13 +29,15 @@ h2 {
 }
 
 h2:hover {
-  transform: scale(1.1);
+  transform: scale(1.01);
   transition: transform 0.3s ease-in-out;
+  color: #737373;
 }
 
 a:hover {
-  transform: scale(1.1);
+  transform: scale(1.01);
   transition: transform 0.3s ease-in-out;
+  color: #737373;
 }
 
 /* STRUCTURE */
@@ -92,47 +94,57 @@ h2.active {
   font-family: "Courier New", monospace;
 }
 
-/* FORM TYPOGRAPHY*/
-
-input[type=button], input[type=submit], input[type=reset] {
-  background-color: #6b1a30;
-  border: none;
-  color: white;
-  padding: 15px 80px;
-  text-align: left;
+/* FORM TYPOGRAPHY */
+input[type=button],
+input[type=submit],
+input[type=reset] {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
   text-decoration: none;
-  display: inline-block;
   text-transform: uppercase;
-  font-size: 13px;
-  border-radius: 5px;
-  margin: 5px 20px 40px 20px;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-  font-family: "Courier New", monospace;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  border-radius: 7px;
+  background-color: rgba(80, 80, 80, 0.2);
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
-  background-color: #ae1840;
-  transform: scale(1.05);
+input[type=button]:active,
+input[type=submit]:active,
+input[type=reset]:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -o-transform: scale(0.95);
-  -ms-transform: scale(0.95);
-  transform: scale(0.95);
+@media (min-width: 768px) {
+  input[type=button],
+  input[type=submit],
+  input[type=reset] {
+    padding: 0.25em 0.75em;
+  }
 }
+
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover {
+  transform: scale(1.01);
+}
+
+
 
 .name-surname-container {
   display: flex;
   justify-content: space-between;
-  margin: 5px 0;
-}
-
-.name-surname-container input {
-  width: 50%;
-  margin: 0;
-  text-align: left;
+  margin: auto;
+  width: 87%;
 }
 
 input[type=text], input[type=password] {
@@ -171,7 +183,7 @@ input[type=tel] {
   background-color: #444444;
   border: none;
   color: #fff;
-  padding: 15px 32px;
+  padding: 15px 10px;
   text-align: left;
   text-decoration: none;
   display: inline-block;
@@ -203,7 +215,7 @@ input[type=email] {
   background-color: #444444;
   border: none;
   color: #fff;
-  padding: 15px 32px;
+  padding: 15px 10px;
   text-align: left;
   text-decoration: none;
   display: inline-block;
