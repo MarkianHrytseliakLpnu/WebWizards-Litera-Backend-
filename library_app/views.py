@@ -1,18 +1,21 @@
-from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views import View
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from .forms import RegistrationForm, LoginForm
 
-from .models import Book, TradeLog, Review, User
-from .serializers import UserSerializer, BookSerializer, TradeLogSerializer, ReviewSerializer
+from .models import Book, TradeLog, Review
+from .serializers import BookSerializer, TradeLogSerializer, ReviewSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class HomeView(View):
@@ -27,12 +30,8 @@ class BooksView(View):
 
 
 def register_view(request):
-    """
-    View для реєстрації користувача.
-    При GET запиті показує форму, при POST — обробляє дані.
-    """
     if request.method == "POST":
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             raw_password = form.cleaned_data.get('password')
@@ -48,15 +47,11 @@ def register_view(request):
 
 
 def login_view(request):
-    """
-    View для логіна користувача.
-    При GET запиті показує форму, при POST обробляє дані логіна.
-    """
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
             user = form.cleaned_data.get('user')
-            request.session['user_id'] = user.id
+            login(request, user)
             messages.success(request, "Вхід виконано успішно!")
             return redirect('home')
         else:
@@ -64,6 +59,15 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'user_login.html', {'form': form})
+
+
+def logout_view(request):
+    """
+    View для виходу користувача із системи.
+    """
+    logout(request)
+    messages.success(request, "Ви вийшли із системи.")
+    return redirect('home')
 
 
 # ---------- Books Endpoints ----------

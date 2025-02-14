@@ -25,8 +25,18 @@
                 <li><a href="#">Відгуки</a></li>
                 <li><a href="{% url 'book' %}">Книги</a></li>
                 <li><a href="#">Оренда</a></li>
-                <li><a class="button-55" href="{% url 'login' %}">УВІЙТИ</a></li>
-                <li><a class="button-54" href="{% url 'register' %}">ЗАРЕЄСТРУВАТИСЯ</a></li>
+
+                {% if user.is_authenticated %}
+                    <li>
+                        <a class="nav-username">
+                            {{ user.username }}
+                        </a>
+                    </li>
+                    <li><a class="button-55" href="{% url 'logout' %}">ВИЙТИ</a></li>
+                {% else %}
+                    <li><a class="button-55" href="{% url 'login' %}">УВІЙТИ</a></li>
+                    <li><a class="button-54" href="{% url 'register' %}">ЗАРЕЄСТРУВАТИСЯ</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -35,7 +45,6 @@
         {% block content %}
         {% endblock %}
     </main>
-
 
     <footer>
         <div class="social-links">

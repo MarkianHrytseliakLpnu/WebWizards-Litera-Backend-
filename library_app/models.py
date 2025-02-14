@@ -1,24 +1,14 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 
-class User(models.Model):
-    name = models.CharField(max_length=50)
-    surname = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50, unique=True)
-    phone_number = models.CharField(max_length=20)
-    password = models.CharField(max_length=128)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+class CustomUser(AbstractUser):
+    phone_number = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return f"{self.name} {self.surname}"
-
-    def set_password(self, raw_password):
-        self.password = make_password(raw_password)
-
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
+        full_name = self.get_full_name()
+        return full_name if full_name else self.username
 
 
 class Location(models.Model):
@@ -76,7 +66,7 @@ class Book(models.Model):
 
 
 class TradeLog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     brought_book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='brought_books')
     borrowed_book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='borrowed_books')
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
@@ -87,11 +77,12 @@ class TradeLog(models.Model):
 
 
 class Review(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField()
     response = models.TextField()
     writing_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Review by {self.author} for {self.book}"
+        return f"Review by {self.user} for {self.book}"
+

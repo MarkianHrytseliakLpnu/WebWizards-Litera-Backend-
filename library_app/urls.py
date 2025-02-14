@@ -3,7 +3,8 @@ from .views import (
     BookListCreateView, BookDetailView,
     ReviewListCreateView, ReviewDetailView,
     TradeLogListCreateView, TradeLogDetailView,
-    HomeView, BooksView, register_view, login_view
+    HomeView, BooksView, register_view, login_view,
+    logout_view
 )
 
 urlpatterns = [
@@ -11,6 +12,7 @@ urlpatterns = [
     path('books/', BooksView.as_view(), name='book'),
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('api/books/', BookListCreateView.as_view(), name='book-list-create'),
     path('api/books/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
     path('api/reviews/', ReviewListCreateView.as_view(), name='review-list-create'),
