@@ -301,6 +301,45 @@ input[type=email]::placeholder {
   animation-duration:1s;
 }
 
+/* Приклад: залишимо анімацію ТІЛЬКИ для .wrapper.fadeInDown */
+.wrapper.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fadeInInput {
+  /* Якщо хочете зберегти якусь мінімальну анімацію при фокусі - можна тут,
+     інакше достатньо звичайного стилю. */
+  transition: background-color 0.5s, border-bottom 0.5s;
+}
+
+.fadeInButton {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  border-radius: 7px;
+  background-color: rgba(80, 80, 80, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.fadeInButton:hover {
+  transform: scale(1.01);
+}
+
+/*
 .fadeIn.first {
   -webkit-animation-delay: 0.4s;
   -moz-animation-delay: 0.4s;
@@ -324,6 +363,7 @@ input[type=email]::placeholder {
   -moz-animation-delay: 1s;
   animation-delay: 1s;
 }
+*/
 
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
@@ -354,3 +394,4 @@ input[type=email]::placeholder {
 * {
   box-sizing: border-box;
 }
+

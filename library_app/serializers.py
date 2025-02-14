@@ -1,18 +1,21 @@
 from rest_framework import serializers
-from .models import User, Location, Book, TradeLog, Review
+from django.contrib.auth import get_user_model
+from .models import Location, Book, TradeLog, Review
+
+User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'password']
         extra_kwargs = {
             'password': {'write_only': True},
         }
 
     def create(self, validated_data):
         password = validated_data.pop('password')
-        user = User(**validated_data)
+        user = User.objects.create(**validated_data)
         user.set_password(password)
         user.save()
         return user
@@ -40,3 +43,4 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
+

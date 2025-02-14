@@ -45,3 +45,20 @@ nav ul li a:hover {
     border-radius: 7px;
     transform: scale(1.05);
 }
+
+.nav-username {
+    color: #ae1840;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-username:hover {
+    color: #ea0e46;
+    transform: none;
+    background-color: transparent;
+    border-radius: 0;
+}

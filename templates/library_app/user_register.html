@@ -1,32 +1,77 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'library_app/css/user_login.css' %}">
+{% if not form.is_bound or form.is_valid %}
 <div class="wrapper fadeInDown">
+{% else %}
+<div class="wrapper">
+{% endif %}
   <div id="formContent">
     <!-- Tabs Titles -->
-    <h2 class="inactive underlineHover"><a href="/login/" class="underlineHover">Увійти</a></h2>
-    <h2 class="active"><a href="/register/" class="underlineHover">Зареєструватися</a></h2>
+    <h2 class="inactive underlineHover"><a href="{% url 'login' %}" class="underlineHover">Увійти</a></h2>
+    <h2 class="active"><a href="{% url 'register' %}" class="underlineHover">Зареєструватися</a></h2>
+
+    <!-- Non-field errors -->
+    {% if form.non_field_errors %}
+      <div class="error">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
 
     <!-- Register Form -->
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
+
+        <!-- Username Field -->
+        <label for="username"></label>
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username"
+               value="{{ form.username.value|default_if_none:'' }}" required>
+        {% if form.username.errors %}
+            <div class="error">{{ form.username.errors }}</div>
+        {% endif %}
+
         <div class="name-surname-container">
-            <label for="name"></label>
-            <input type="text" id="name" class="fadeIn second" name="name" placeholder="Ім'я" required>
-            <label for="surname"></label>
-            <input type="text" id="surname" class="fadeIn second" name="surname" placeholder="Прізвище" required>
+            <!-- First Name Field -->
+            <label for="first_name"></label>
+            <input type="text" id="first_name" class="fadeIn second" name="first_name" placeholder="Ім'я"
+                   value="{{ form.first_name.value|default_if_none:'' }}" required>
+            {% if form.first_name.errors %}
+                <div class="error">{{ form.first_name.errors }}</div>
+            {% endif %}
+            <!-- Last Name Field -->
+            <label for="last_name"></label>
+            <input type="text" id="last_name" class="fadeIn second" name="last_name" placeholder="Прізвище"
+                   value="{{ form.last_name.value|default_if_none:'' }}" required>
+            {% if form.last_name.errors %}
+                <div class="error">{{ form.last_name.errors }}</div>
+            {% endif %}
         </div>
+
+        <!-- Email Field -->
         <label for="email"></label>
-        <input type="email" id="email" class="fadeIn second" name="email" placeholder="Пошта" required>
-        <label for="phone_number"></label>
-        <input type="tel" id="phone_number" class="fadeIn third" name="phone_number" placeholder="Номер телефону" required>
+        <input type="email" id="email" class="fadeIn second" name="email" placeholder="Пошта"
+               value="{{ form.email.value|default_if_none:'' }}" required>
+        {% if form.email.errors %}
+            <div class="error">{{ form.email.errors }}</div>
+        {% endif %}
+
+        <!-- Password Field -->
         <label for="password"></label>
         <input type="password" id="password" class="fadeIn third" name="password" placeholder="Пароль" required>
+        {% if form.password.errors %}
+            <div class="error">{{ form.password.errors }}</div>
+        {% endif %}
+
+        <!-- Confirm Password Field -->
         <label for="confirm_password"></label>
         <input type="password" id="confirm_password" class="fadeIn third" name="confirm_password" placeholder="Підтвердження пароля" required>
+        {% if form.confirm_password.errors %}
+            <div class="error">{{ form.confirm_password.errors }}</div>
+        {% endif %}
+
         <input type="submit" class="fadeIn fourth" value="Зареєструватися">
     </form>
 
-      <!-- Link to Home Page -->
+    <!-- Link to Home Page -->
     <div id="formFooter">
       <a class="underlineHover" href="/">Скасувати</a>
     </div>

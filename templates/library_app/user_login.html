@@ -1,22 +1,47 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'library_app/css/user_login.css' %}">
+
+{# Якщо форма не відправлена (не bound) або є дійсною (is_valid),
+   тоді додаємо fadeInDown для ефекту першого завантаження. #}
+{% if not form.is_bound or form.is_valid %}
 <div class="wrapper fadeInDown">
+{% else %}
+<div class="wrapper">
+{% endif %}
   <div id="formContent">
     <!-- Tabs Titles -->
-    <h2 class="active"><a href="/login/" class="underlineHover">Увійти</a></h2>
-    <h2 class="inactive underlineHover"><a href="/register/" class="underlineHover">Зареєструватися</a></h2>
+    <h2 class="active"><a href="{% url 'login' %}" class="underlineHover">Увійти</a></h2>
+    <h2 class="inactive underlineHover"><a href="{% url 'register' %}" class="underlineHover">Зареєструватися</a></h2>
 
     <!-- Login Form -->
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
+
         <label for="email"></label>
-        <input type="email" id="email" class="fadeIn second" name="email" placeholder="Пошта" required>
+        <input type="email"
+               id="email"
+               class="fadeInInput"
+               name="email"
+               placeholder="Пошта"
+               value="{{ form.email.value|default_if_none:'' }}"
+               required>
+
         <label for="password"></label>
-        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Пароль" required>
-      <input type="submit" class="fadeIn fourth" value="Увійти">
+        <input type="password"
+               id="password"
+               class="fadeInInput"
+               name="password"
+               placeholder="Пароль"
+               required>
+        {% if form.non_field_errors %}
+          <div class="error">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <input type="submit" class="fadeIn fourth" value="УВІЙТИ">
     </form>
 
-    <!-- Link to Home Page -->
     <div id="formFooter">
       <a class="underlineHover" href="/">Скасувати</a>
     </div>
