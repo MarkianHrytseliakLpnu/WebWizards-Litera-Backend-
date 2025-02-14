@@ -1,8 +1,6 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'library_app/css/user_login.css' %}">
 
-{# Якщо форма не відправлена (не bound) або є дійсною (is_valid),
-   тоді додаємо fadeInDown для ефекту першого завантаження. #}
 {% if not form.is_bound or form.is_valid %}
 <div class="wrapper fadeInDown">
 {% else %}
