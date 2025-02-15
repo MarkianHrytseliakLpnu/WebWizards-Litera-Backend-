@@ -68,6 +68,9 @@ a:hover {
   text-align: center;
   color: #fff;
   font-family: "Courier New", monospace;
+  animation: fadeInFromCenter ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
 }
 
 #formFooter {
@@ -137,8 +140,6 @@ input[type=submit]:hover,
 input[type=reset]:hover {
   transform: scale(1.01);
 }
-
-
 
 .name-surname-container {
   display: flex;
@@ -245,75 +246,87 @@ input[type=email]::placeholder {
 
 /* ANIMATIONS */
 
-/* Simple CSS3 Fade-in-down Animation */
-.fadeInDown {
-  -webkit-animation-name: fadeInDown;
-  animation-name: fadeInDown;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-
-@-webkit-keyframes fadeInDown {
+/* Simple CSS3 Blur-in Animation */
+@-webkit-keyframes blurIn {
   0% {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
   }
   100% {
     opacity: 1;
-    -webkit-transform: none;
-    transform: none;
+    -webkit-filter: none;
+    filter: none;
   }
 }
 
-@keyframes fadeInDown {
+@keyframes blurIn {
   0% {
     opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
   }
   100% {
     opacity: 1;
-    -webkit-transform: none;
-    transform: none;
+    -webkit-filter: none;
+    filter: none;
   }
 }
 
-/* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.blurIn {
+  opacity: 0;
+  -webkit-animation: blurIn ease-in 1;
+  -moz-animation: blurIn ease-in 1;
+  animation: blurIn ease-in 1;
 
-.fadeIn {
-  opacity:0;
-  -webkit-animation:fadeIn ease-in 1;
-  -moz-animation:fadeIn ease-in 1;
-  animation:fadeIn ease-in 1;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
-  -webkit-animation-fill-mode:forwards;
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
-
-  -webkit-animation-duration:1s;
-  -moz-animation-duration:1s;
-  animation-duration:1s;
+  -webkit-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  animation-duration: 0.5s;
 }
 
-/* Приклад: залишимо анімацію ТІЛЬКИ для .wrapper.fadeInDown */
-.wrapper.fadeInDown {
-  -webkit-animation-name: fadeInDown;
-  animation-name: fadeInDown;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
+/* Simple CSS3 Fade-in from Center Animation */
+@-webkit-keyframes fadeInFromCenter {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInFromCenter {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fadeInFromCenter {
+  opacity: 0;
+  -webkit-animation: fadeInFromCenter ease-in 1;
+  -moz-animation: fadeInFromCenter ease-in 1;
+  animation: fadeInFromCenter ease-in 1;
+
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  animation-duration: 0.5s;
 }
 
 .fadeInInput {
-  /* Якщо хочете зберегти якусь мінімальну анімацію при фокусі - можна тут,
-     інакше достатньо звичайного стилю. */
   transition: background-color 0.5s, border-bottom 0.5s;
 }
 
@@ -339,33 +352,6 @@ input[type=email]::placeholder {
   transform: scale(1.01);
 }
 
-/*
-.fadeIn.first {
-  -webkit-animation-delay: 0.4s;
-  -moz-animation-delay: 0.4s;
-  animation-delay: 0.4s;
-}
-
-.fadeIn.second {
-  -webkit-animation-delay: 0.6s;
-  -moz-animation-delay: 0.6s;
-  animation-delay: 0.6s;
-}
-
-.fadeIn.third {
-  -webkit-animation-delay: 0.8s;
-  -moz-animation-delay: 0.8s;
-  animation-delay: 0.8s;
-}
-
-.fadeIn.fourth {
-  -webkit-animation-delay: 1s;
-  -moz-animation-delay: 1s;
-  animation-delay: 1s;
-}
-*/
-
-/* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
   display: block;
   left: 0;
@@ -395,3 +381,231 @@ input[type=email]::placeholder {
   box-sizing: border-box;
 }
 
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.logo-container {
+    background-color: #1b1b1b;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.logo img {
+    width: 250px;
+    height: auto;
+    padding-left: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+nav ul li {
+    flex-grow: 1;
+}
+
+nav ul li a {
+    color: #ae1840;
+    text-decoration: none;
+    font-size: 1.35rem;
+    padding: 6px;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    border-radius: 7px;
+}
+
+nav ul li a:hover {
+    color: #ea0e46;
+    background-color: rgba(80, 80, 80, 0.2);
+    border-radius: 7px;
+    transform: scale(1.05);
+}
+
+.nav-username {
+    color: #ae1840;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-username:hover {
+    color: #ea0e46;
+    transform: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.cta-button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.cta-button .btn-home {
+    padding: 10px 20px;
+    background-color: #ff1654;
+    color: #fff;
+}
+
+.cta-button .btn-home:hover {
+    background-color: #ff1654;
+}
+
+.button-54 {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+        border-radius: 7px;
+}
+
+.button-54:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.button-54:hover {
+    transform: scale(1.01);
+}
+
+.button-55 {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-55:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-55 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.button-55:hover {
+    transform: scale(1.01);
+}
+
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links a {
+    color: #ae1840;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1rem;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #0e0e0e;
+}
+
+.logo-container {
+    background-color: #1b1b1b;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #1b1b1b;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    background-color: #2c2c2c;
+    color: #ea0e46;
+}
+
+tr:hover {
+    background-color: #333;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #0e0e0e;
+    color: #fff;
+}
+
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links a {
+    color: #ff1654;
+    text-decoration: none;
+    margin: 0 10px 10px;
+    font-size: 1rem;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
