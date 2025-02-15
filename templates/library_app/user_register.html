@@ -1,5 +1,33 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'library_app/css/user_login.css' %}">
+
+<header>
+    <div class="logo">
+        <img src="{% static 'library_app/images/litera.png' %}" alt="Логотип LITERA">
+    </div>
+    <nav>
+        <ul>
+            <li><a class="button-49" href="{% url 'home' %}">Головна</a></li>
+            <li><a href="#">Локації</a></li>
+            <li><a href="#">Відгуки</a></li>
+            <li><a href="{% url 'book' %}">Книги</a></li>
+            <li><a href="#">Оренда</a></li>
+
+            {% if user.is_authenticated %}
+                <li>
+                    <a class="nav-username">
+                        {{ user.username }}
+                    </a>
+                </li>
+                <li><a class="button-55" href="{% url 'logout' %}">ВИЙТИ</a></li>
+            {% else %}
+                <li><a class="button-55" href="{% url 'login' %}">УВІЙТИ</a></li>
+                <li><a class="button-54" href="{% url 'register' %}">ЗАРЕЄСТРУВАТИСЯ</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
 {% if not form.is_bound or form.is_valid %}
 <div class="wrapper fadeInDown">
 {% else %}
@@ -23,7 +51,7 @@
 
         <!-- Username Field -->
         <label for="username"></label>
-        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username"
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="Нікнейм"
                value="{{ form.username.value|default_if_none:'' }}" required>
         {% if form.username.errors %}
             <div class="error">{{ form.username.errors }}</div>
@@ -78,3 +106,13 @@
 
   </div>
 </div>
+
+<footer>
+    <div class="social-links">
+        <a href="https://x.com" target="_blank">X</a>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+        <a href="https://telegram.org" target="_blank">Telegram</a>
+        <a href="https://facebook.com" target="_blank">Facebook</a>
+    </div>
+    <p>&copy; 2024 LITERA. Всі права захищені.</p>
+</footer>
