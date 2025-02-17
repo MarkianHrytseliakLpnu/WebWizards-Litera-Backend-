@@ -9,7 +9,6 @@ body {
     color: #fff;
     font-family: 'Courier New', monospace;
     font-size: 16px;
-    padding: 20px;
 }
 
 header {
@@ -48,13 +47,4 @@ th {
 
 tr:hover {
     background-color: #333;
-}
-
-a {
-    color: #ea0e46;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #ea0e46;
 }

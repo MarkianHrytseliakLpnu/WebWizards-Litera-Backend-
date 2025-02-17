@@ -1,0 +1,89 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'library_app/css/user_login.css' %}">
+<link rel="stylesheet" href="{% static 'library_app/css/header.css' %}">
+<link rel="stylesheet" href="{% static 'library_app/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'library_app/css/book.css' %}">
+<link rel="stylesheet" href="{% static 'library_app/css/buttons.css' %}">
+
+<header>
+    <div class="logo">
+        <img src="{% static 'library_app/images/litera.png' %}" alt="Логотип LITERA">
+    </div>
+    <nav>
+        <ul>
+            <li><a class="button-49" href="{% url 'home' %}">Головна</a></li>
+            <li><a href="#">Локації</a></li>
+            <li><a href="#">Відгуки</a></li>
+            <li><a href="{% url 'book' %}">Книги</a></li>
+            <li><a href="#">Оренда</a></li>
+
+            {% if user.is_authenticated %}
+                <li>
+                    <a class="nav-username">
+                        {{ user.username }}
+                    </a>
+                </li>
+                <li><a class="button-55" href="{% url 'logout' %}">ВИЙТИ</a></li>
+            {% else %}
+                <li><a class="button-55" href="{% url 'login' %}">УВІЙТИ</a></li>
+                <li><a class="button-54" href="{% url 'register' %}">ЗАРЕЄСТРУВАТИСЯ</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+{% if not form.is_bound or form.is_valid %}
+<div class="wrapper fadeInDown">
+{% else %}
+<div class="wrapper">
+{% endif %}
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="active"><a href="{% url 'login' %}" class="underlineHover">Увійти</a></h2>
+    <h2 class="inactive underlineHover"><a href="{% url 'register' %}" class="underlineHover">Зареєструватися</a></h2>
+
+    <!-- Login Form -->
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+
+        <label for="email"></label>
+        <input type="email"
+               id="email"
+               class="fadeInInput"
+               name="email"
+               placeholder="Пошта"
+               value="{{ form.email.value|default_if_none:'' }}"
+               required>
+
+        <label for="password"></label>
+        <input type="password"
+               id="password"
+               class="fadeInInput"
+               name="password"
+               placeholder="Пароль"
+               required>
+        {% if form.non_field_errors %}
+          <div class="error">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <input type="submit" class="fadeIn fourth" value="УВІЙТИ">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="/">Скасувати</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+    <div class="social-links">
+        <a href="https://x.com" target="_blank">X</a>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+        <a href="https://telegram.org" target="_blank">Telegram</a>
+        <a href="https://facebook.com" target="_blank">Facebook</a>
+    </div>
+    <p>&copy; 2024 LITERA. Всі права захищені.</p>
+</footer>

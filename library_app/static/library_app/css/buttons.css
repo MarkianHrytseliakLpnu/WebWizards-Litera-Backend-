@@ -13,22 +13,71 @@
     background-color: #ff1654;
 }
 
-.cta-button .btn-register {
-    padding: 10px 20px;
-    background-color: #ea0e46;
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    transition: transform 0.3s, background-color 0.3s;
-    position: relative;
-    z-index: 1;
+.button-54 {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+        border-radius: 7px;
 }
 
-.cta-button .btn-register:hover {
-    background-color: #6b1a30;
-    transform: scale(1.1);
+.button-54:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.button-54:hover {
+    transform: scale(1.01);
+}
+
+.button-55 {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-55:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-55 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.button-55:hover {
+    transform: scale(1.01);
 }
 
 .social-links {
@@ -36,7 +85,7 @@
 }
 
 .social-links a {
-    color: #ff1654;
+    color: #ae1840;
     text-decoration: none;
     margin: 0 10px;
     font-size: 1rem;

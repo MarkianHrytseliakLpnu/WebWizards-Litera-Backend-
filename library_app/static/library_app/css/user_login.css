@@ -1,0 +1,395 @@
+/* BASIC */
+html {
+  background-color: #000000;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+  font-family: "Poppins", "Courier New", monospace;
+  height: 100vh;
+  color: #fff;
+}
+
+a {
+  color: #fff;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 400;
+  font-family: "Courier New", monospace;
+}
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #6b1a30;
+  font-family: "Courier New", monospace;
+}
+
+h2:hover {
+  transform: scale(1.01);
+  transition: transform 0.3s ease-in-out;
+  color: #737373;
+}
+
+a:hover {
+  transform: scale(1.01);
+  transition: transform 0.3s ease-in-out;
+  color: #737373;
+}
+
+/* STRUCTURE */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+  background-color: #000000;
+  background-image: url('../images/log_back.jpg');
+}
+
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #333333;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #fff;
+  font-family: "Courier New", monospace;
+  animation: fadeInFromCenter ease-in 1;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+
+#formFooter {
+  background-color: #444444;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+  color: #fff;
+  font-family: "Courier New", monospace;
+}
+
+/* TABS */
+
+h2.inactive {
+  color: #cccccc;
+  font-family: "Courier New", monospace;
+}
+
+h2.active {
+  color: #fff;
+  border-bottom: 2px solid #ae1840;
+  font-family: "Courier New", monospace;
+}
+
+/* FORM TYPOGRAPHY */
+input[type=button],
+input[type=submit],
+input[type=reset] {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  border-radius: 7px;
+  background-color: rgba(80, 80, 80, 0.2);
+  margin: 0.8em;
+}
+
+
+input[type=button]:active,
+input[type=submit]:active,
+input[type=reset]:active {
+  box-shadow: 0 0 0 0;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  input[type=button],
+  input[type=submit],
+  input[type=reset] {
+    padding: 0.25em 0.75em;
+  }
+}
+
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover {
+  transform: scale(1.01);
+}
+
+.name-surname-container {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 87%;
+}
+
+input[type=text], input[type=password] {
+  background-color: #444444;
+  border: none;
+  color: #fff;
+  padding: 15px 10px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #444444;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  font-family: "Courier New", monospace;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #555555;
+  border-bottom: 2px solid #fff;
+}
+
+input[type=text]::placeholder, input[type=password]::placeholder {
+  color: #cccccc;
+  font-family: "Courier New", monospace;
+}
+
+input[type=tel] {
+  background-color: #444444;
+  border: none;
+  color: #fff;
+  padding: 15px 10px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #444444;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  font-family: "Courier New", monospace;
+}
+
+input[type=tel]:focus {
+  background-color: #555555;
+  border-bottom: 2px solid #fff;
+}
+
+input[type=tel]::placeholder {
+  color: #cccccc;
+  font-family: "Courier New", monospace;
+}
+
+input[type=email] {
+  background-color: #444444;
+  border: none;
+  color: #fff;
+  padding: 15px 10px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #444444;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  font-family: "Courier New", monospace;
+}
+
+input[type=email]:focus {
+  background-color: #555555;
+  border-bottom: 2px solid #fff;
+}
+
+input[type=email]::placeholder {
+  color: #cccccc;
+  font-family: "Courier New", monospace;
+}
+
+/* ANIMATIONS */
+
+/* Simple CSS3 Blur-in Animation */
+@-webkit-keyframes blurIn {
+  0% {
+    opacity: 0;
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none;
+  }
+}
+
+@keyframes blurIn {
+  0% {
+    opacity: 0;
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none;
+  }
+}
+
+.blurIn {
+  opacity: 0;
+  -webkit-animation: blurIn ease-in 1;
+  -moz-animation: blurIn ease-in 1;
+  animation: blurIn ease-in 1;
+
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+}
+
+/* Simple CSS3 Fade-in from Center Animation */
+@-webkit-keyframes fadeInFromCenter {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInFromCenter {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fadeInFromCenter {
+  opacity: 0;
+  -webkit-animation: fadeInFromCenter ease-in 1;
+  -moz-animation: fadeInFromCenter ease-in 1;
+  animation: fadeInFromCenter ease-in 1;
+
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+}
+
+.fadeInInput {
+  transition: background-color 0.5s, border-bottom 0.5s;
+}
+
+.fadeInButton {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ae1840;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  position: relative;
+  user-select: none;
+  border-radius: 7px;
+  background-color: rgba(80, 80, 80, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.fadeInButton:hover {
+  transform: scale(1.01);
+}
+
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #ff1654;
+  content: "";
+  transition: width 0.2s;
+}
+
+.underlineHover:hover {
+  color: #fff;
+}
+
+/* OTHERS */
+
+*:focus {
+    outline: none;
+}
+
+#icon {
+  width:60%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+}

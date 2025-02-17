@@ -1,10 +1,25 @@
 from rest_framework import serializers
-from .models import User, Location, Book, TradeLog, Review
+from django.contrib.auth import get_user_model
+from .models import Location, Book, TradeLog, Review
+
+User = get_user_model()
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'surname', 'email', 'phone_number']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
 
 class LocationSerializer(serializers.ModelSerializer):
     geojson = serializers.SerializerMethodField()
@@ -30,14 +45,17 @@ class LocationSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['id', 'location', 'name', 'author', 'publishing', 'year_of_publication', 'language', 'number_of_pages']
+        fields = '__all__'
+
 
 class TradeLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = TradeLog
-        fields = ['id', 'user', 'brought_book', 'borrowed_book', 'location', 'trade_time']
+        fields = '__all__'
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['id', 'author', 'book', 'rating', 'response', 'writing_time']
+        fields = '__all__'
+

@@ -12,8 +12,9 @@
 }
 
 .logo img {
-    max-width: 75%;
+    width: 250px;
     height: auto;
+    padding-left: 50px;
 }
 
 nav ul {
@@ -21,7 +22,6 @@ nav ul {
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding: 10px;
 }
 
 nav ul li {
@@ -29,19 +29,36 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #ea0e46;
+    color: #ae1840;
     text-decoration: none;
-    font-size: 1.5rem;
-    padding: 20px;
+    font-size: 1.35rem;
+    padding: 6px;
     display: block;
     text-align: center;
     transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    border-radius: 7px;
 }
 
 nav ul li a:hover {
-    background-color: #ea0e46;
-    color: #fff;
-    border-radius: 5px;
-    transform: scale(1.1);
+    color: #ea0e46;
+    background-color: rgba(80, 80, 80, 0.2);
+    border-radius: 7px;
+    transform: scale(1.05);
 }
 
+.nav-username {
+    color: #ae1840;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-username:hover {
+    color: #ea0e46;
+    transform: none;
+    background-color: transparent;
+    border-radius: 0;
+}
