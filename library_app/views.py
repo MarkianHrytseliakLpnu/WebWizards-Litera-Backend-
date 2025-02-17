@@ -8,12 +8,14 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from .forms import RegistrationForm, LoginForm
 
 from .models import Book, TradeLog, Review
 from .serializers import BookSerializer, TradeLogSerializer, ReviewSerializer
 from django.contrib.auth import get_user_model
+import json
+import requests
 
 User = get_user_model()
 
@@ -188,28 +190,6 @@ class TradeLogDetailView(APIView):
         tradelog = get_object_or_404(TradeLog, pk=pk)
         tradelog.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class HomeView(View):
-    def get(self, request):
-        return render(request, 'home.html')
-
-class BooksView(View):
-    def get(self, request):
-        books = Book.objects.all()
-        return render(request, 'book.html', {'books': books})
-
-class UserRegisterView(View):
-    def get(self, request):
-        return render(request, 'user_register.html')
-
-    def post(self, request):
-        serializer = UserSerializer(data=request.POST)
-        if serializer.is_valid():
-            serializer.save()
-            return redirect('home')
-        else:
-            return HttpResponse(f"Помилка: {serializer.errors}", status=status.HTTP_400_BAD_REQUEST)
 
 
 class LocationsView(View):
