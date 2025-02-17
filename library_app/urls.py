@@ -1,13 +1,12 @@
 from django.urls import path
 from .views import (
     UserListCreateView, UserDetailView,
-    LocationListCreateView, LocationDetailView,
     BookListCreateView, BookDetailView,
     TradeLogListCreateView, TradeLogDetailView,
     ReviewListCreateView, ReviewDetailView,
     HomeView, BooksView, LocationsView, UserRegisterView
 )
-
+from library_app.services.location_service import LocationListCreateView, LocationDetailView
 urlpatterns = [
     # Основні URL
     path('', HomeView.as_view(), name='home'),

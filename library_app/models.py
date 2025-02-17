@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class User(models.Model):
     name = models.CharField(max_length=50)
@@ -14,6 +15,16 @@ class Location(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
     work_schedule = models.CharField(max_length=100)
+    longitude = models.DecimalField(
+        max_digits=18,  # 3 знаки перед комою + 15 після коми
+        decimal_places=15,
+        validators=[MinValueValidator(-180), MaxValueValidator(180)]
+    )
+    latitude = models.DecimalField(
+        max_digits=17,  # 2 знаки перед комою + 15 після коми
+        decimal_places=15,
+        validators=[MinValueValidator(-90), MaxValueValidator(90)]
+    )
 
     def __str__(self):
         return self.name

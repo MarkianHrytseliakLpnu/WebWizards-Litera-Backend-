@@ -7,9 +7,25 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'surname', 'email', 'phone_number']
 
 class LocationSerializer(serializers.ModelSerializer):
+    geojson = serializers.SerializerMethodField()
+
     class Meta:
         model = Location
-        fields = ['id', 'name', 'address', 'work_schedule']
+        fields = ['id', 'name', 'address', 'work_schedule', 'latitude', 'longitude', 'geojson']
+
+    def get_geojson(self, obj):
+        return {
+            "type": "Feature",
+            "properties": {
+                "name": obj.name,
+                "address": obj.address,
+                "work_schedule": obj.work_schedule
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [float(obj.longitude), float(obj.latitude)]
+            }
+        }
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:

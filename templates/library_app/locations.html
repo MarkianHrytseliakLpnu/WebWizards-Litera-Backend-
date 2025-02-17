@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Мапа Локації{% endblock %}
+{% block header %}<h1>Мапа локацій</h1>{% endblock %}
+{% block content %}
+    <div id="map"></div>
+    <div id="searchResults" class="dropdown-content"></div>
+    <div id="info-table" class="info-table"></div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFybC1rYXJreCIsImEiOiJjbTM4ajBzMWcwcThxMmxyNjJsem0yend3In0.Y3IxtbjjnT5nSpfgZyR9ZQ';
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/marl-karkx/cm50vmhnn009i01sag0oka2vx',
+            center: [24.00967, 49.83446],
+            zoom: 11.79
+        });
+
+        map.addControl(new mapboxgl.NavigationControl());
+        map.addControl(new mapboxgl.GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: true }));
+
+        var geojson = {{ geojson|safe }};
+
+        map.on('load', function () {
+            map.removeLayer('poi-label');
+
+            map.addSource('bookstores', {
+                'type': 'geojson',
+                'data': geojson
+            });
+
+            map.loadImage('{% static "library_app/images/icon.jpg" %}', function (error, image) {
+                if (error) throw error;
+                map.addImage('bookstore-icon', image);
+
+                map.addLayer({
+                    'id': 'bookstores-layer',
+                    'type': 'symbol',
+                    'source': 'bookstores',
+                    'layout': {
+                        'icon-image': 'bookstore-icon',
+                        'icon-size': 0.1,
+                        'icon-anchor': 'bottom',
+                    }
+                });
+            });
+
+            const infoTable = document.getElementById('info-table');
+            const searchBox = document.getElementById('searchBox');
+            const searchResults = document.getElementById('searchResults');
+
+            map.on('mouseenter', 'bookstores-layer', function (e) {
+                map.getCanvas().style.cursor = 'pointer';
+                const properties = e.features[0].properties;
+                infoTable.innerHTML = `<table border="1"><tr><th colspan="2">${properties.name}</th></tr><tr><td>📍 Адреса</td><td>${properties.address}</td></tr><tr><td>🕒 Графік</td><td>${properties.work_schedule}</td></tr></table>`;
+                infoTable.style.display = 'block';
+                infoTable.style.left = `${e.point.x - 20}px`;
+                infoTable.style.top = `${e.point.y + 80}px`;
+            });
+
+            map.on('mouseleave', 'bookstores-layer', function () {
+                map.getCanvas().style.cursor = '';
+                infoTable.style.display = 'none';
+            });
+
+            map.on('click', 'bookstores-layer', function (e) {
+                const properties = e.features[0].properties;
+                alert(`📚 ${properties.name}\n📍 ${properties.address}\n🕒 ${properties.work_schedule}`);
+            });
+
+            searchBox.addEventListener('input', function () {
+                const searchText = searchBox.value.toLowerCase();
+                searchResults.innerHTML = '';
+
+                if (searchText.length > 0) {
+                    const features = map.queryRenderedFeatures({ layers: ['bookstores-layer'] });
+                    const matches = features.filter(f => f.properties.name.toLowerCase().includes(searchText));
+
+                    matches.forEach(feature => {
+                        const item = document.createElement('div');
+                        item.classList.add('dropdown-item');
+                        item.textContent = feature.properties.name;
+                        item.addEventListener('click', function () {
+                            map.flyTo({ center: feature.geometry.coordinates, zoom: 14 });
+                            searchBox.value = feature.properties.name;
+                            searchResults.innerHTML = '';
+                        });
+                        searchResults.appendChild(item);
+                    });
+                }
+            });
+
+            document.getElementById('resetView').addEventListener('click', function () {
+                map.flyTo({ center: [24.00967, 49.83446], zoom: 11.79 });
+            });
+        });
+    </script>
+
+    <style>
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+        .info-table {
+            position: absolute;
+            background: none;
+            padding: 5px;
+            display: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            font-size: 12px;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+        #searchBox {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+        #searchResults {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            z-index: 10;
+            background: white;
+            border: 1px solid gray;
+            border-radius: 5px;
+            display: none;
+        }
+        .dropdown-item {
+            padding: 5px;
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background: #f0f0f0;
+        }
+        #resetView {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            background: white;
+        }
+    </style>
+{% endblock %}
+
+
+

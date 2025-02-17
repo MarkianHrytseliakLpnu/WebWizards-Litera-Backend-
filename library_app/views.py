@@ -9,6 +9,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from library_app.models import User, Book
 from django.views import View
+import requests
+import json
 
 class UserListCreateView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -45,45 +47,6 @@ class UserDetailView(APIView):
         user = get_object_or_404(User, pk=pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# Views for Location
-class LocationListCreateView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request):
-        locations = Location.objects.all()
-        serializer = LocationSerializer(locations, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = LocationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class LocationDetailView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request, pk):
-        location = get_object_or_404(Location, pk=pk)
-        serializer = LocationSerializer(location)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        location = get_object_or_404(Location, pk=pk)
-        serializer = LocationSerializer(location, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        location = get_object_or_404(Location, pk=pk)
-        location.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 # Views for Book
 class BookListCreateView(APIView):
@@ -210,9 +173,10 @@ class BooksView(View):
 
 class LocationsView(View):
     def get(self, request):
-        locations = Location.objects.all()
-        return render(request, 'locations.html', {'locations': locations})
+        response = requests.get(request.build_absolute_uri('/api/locations/'))  # Отримуємо GeoJSON з API
+        geojson = response.json() if response.status_code == 200 else {}
 
+        return render(request, 'locations.html', {'geojson': json.dumps(geojson)})
 class UserRegisterView(View):
     def get(self, request):
         return render(request, 'user_register.html')
