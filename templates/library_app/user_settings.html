@@ -2,11 +2,6 @@
 {% block content %}
 
 <h1>Налаштування профілю</h1>
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert">{{ message }}</div>
-  {% endfor %}
-{% endif %}
 
 <form method="POST">
   {% csrf_token %}
@@ -108,4 +103,13 @@
 
   <button type="submit" class="btn-save">Зберегти</button>
 </form>
+
+    {% if messages %}
+        <hr>
+        <p>info tab:</p>
+        {% for message in messages %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+        <hr>
+    {% endif %}
 {% endblock %}
