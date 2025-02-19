@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
 
@@ -81,16 +80,12 @@ def logout_view(request):
 
 @login_required
 def user_settings_view(request):
-    """
-    Сторінка налаштувань профілю: редагування Ім'я, Прізвище, Email,
-    телефон + можливість змінити пароль (старий + два рази новий).
-    """
     if request.method == "POST":
         form = UserSettingsForm(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "Дані успішно оновлено!")
-            return redirect('user_settings')  # або на сторінку профілю / home
+            return redirect('user_profile')
         else:
             messages.error(request, "Виправте помилки у формі, будь ласка.")
     else:

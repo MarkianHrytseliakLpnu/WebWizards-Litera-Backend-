@@ -6,6 +6,12 @@
     <p><strong>Прізвище:</strong> {{ request.user.last_name }}</p>
     <p><strong>Email:</strong> {{ request.user.email }}</p>
     <p><strong>Телефон:</strong> {{ request.user.phone_number }}</p>
+    <hr>
+    <h3>Соцмережі</h3>
+    <p><strong>X:</strong> {{ request.user.x_link }}</p>
+    <p><strong>Instagram:</strong> {{ request.user.instagram_link }}</p>
+    <p><strong>Telegram:</strong> {{ request.user.telegram_link }}</p>
+    <p><strong>Facebook:</strong> {{ request.user.facebook_link }}</p>
 
     <!-- Картинка-заглушка (оскільки аватара немає) -->
 
