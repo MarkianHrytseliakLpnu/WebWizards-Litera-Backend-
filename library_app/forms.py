@@ -12,6 +12,12 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            self.add_error('username', "Цей нікнейм уже використовується.")
+        return username
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
@@ -59,10 +65,6 @@ class LoginForm(forms.Form):
 
 
 class UserSettingsForm(forms.ModelForm):
-    """
-    Оновлює поля username, first_name, last_name, email, phone_number.
-    Також дозволяє змінити пароль за умови введення старого.
-    """
     old_password = forms.CharField(
         label="Старий пароль",
         widget=forms.PasswordInput,
@@ -81,7 +83,10 @@ class UserSettingsForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email", "phone_number"]
+        fields = [
+            "username", "first_name", "last_name", "email", "phone_number",
+            "x_link", "instagram_link", "telegram_link", "facebook_link"
+        ]
 
     def __init__(self, user=None, *args, **kwargs):
         """
@@ -93,25 +98,69 @@ class UserSettingsForm(forms.ModelForm):
             kwargs["instance"] = user
         super().__init__(*args, **kwargs)
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        # Якщо користувач не міняв username, або він лишається такий самий, пропускаємо
+        if username and username != self.user.username:
+            # Перевірка, чи такий username вже є
+            if User.objects.filter(username=username).exclude(pk=self.user.pk).exists():
+                raise forms.ValidationError("Цей нікнейм уже використовується.")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and email != self.user.email:
+            if User.objects.filter(email=email).exclude(pk=self.user.pk).exists():
+                raise forms.ValidationError("Цей Email уже використовується.")
+        return email
+
+    def clean_phone_number(self):
+        phone = self.cleaned_data.get('phone_number')
+        if phone and phone != self.user.phone_number:
+            if User.objects.filter(phone_number=phone).exclude(pk=self.user.pk).exists():
+                raise forms.ValidationError("Цей номер телефону уже використовується.")
+        return phone
+
+    def clean_x_link(self):
+        val = self.cleaned_data.get('x_link')
+        if val and User.objects.filter(x_link=val).exclude(pk=self.user.pk).exists():
+            raise forms.ValidationError("Таке посилання на X уже використовується.")
+        return val
+
+    def clean_instagram_link(self):
+        val = self.cleaned_data.get('instagram_link')
+        if val and User.objects.filter(instagram_link=val).exclude(pk=self.user.pk).exists():
+            raise forms.ValidationError("Таке посилання на Instagram уже використовується.")
+        return val
+
+    def clean_telegram_link(self):
+        val = self.cleaned_data.get('telegram_link')
+        if val and User.objects.filter(telegram_link=val).exclude(pk=self.user.pk).exists():
+            raise forms.ValidationError("Таке посилання на Telegram уже використовується.")
+        return val
+
+    def clean_facebook_link(self):
+        val = self.cleaned_data.get('facebook_link')
+        if val and User.objects.filter(facebook_link=val).exclude(pk=self.user.pk).exists():
+            raise forms.ValidationError("Таке посилання на Facebook уже використовується.")
+        return val
+
     def clean(self):
         cleaned_data = super().clean()
         old_password = cleaned_data.get("old_password")
         new_password1 = cleaned_data.get("new_password1")
         new_password2 = cleaned_data.get("new_password2")
 
-        # Перевірка зміни пароля лише якщо принаймні одне з нових полів заповнено
         if new_password1 or new_password2:
-            # Користувач повинен ввести старий пароль
             if not old_password:
                 self.add_error("old_password", "Потрібно ввести старий пароль.")
             else:
-                # Перевіряємо, чи старий пароль дійсний
                 if not self.user.check_password(old_password):
                     self.add_error("old_password", "Старий пароль невірний.")
 
-            # Перевірка співпадіння нового пароля
             if new_password1 and new_password2 and new_password1 != new_password2:
                 self.add_error("new_password2", "Паролі не співпадають.")
+
         return cleaned_data
 
     def save(self, commit=True):
