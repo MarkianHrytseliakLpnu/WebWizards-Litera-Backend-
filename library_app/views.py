@@ -1,5 +1,8 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
+
+from .search_utils import search_books
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -26,8 +29,13 @@ class HomeView(View):
 
 class BooksView(View):
     def get(self, request):
-        books = Book.objects.all()
-        return render(request, 'book.html', {'books': books})
+        query = request.GET.get('q', '').strip()
+        books = search_books(query)
+
+        return render(request, 'book.html', {
+            'books': books,
+            'query': query,
+        })
 
 
 def register_view(request):
