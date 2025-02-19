@@ -3,6 +3,8 @@
 {% block title %}Головна сторінка{% endblock %}
 
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'library_app/css/hero.css' %}">
 <section class="hero">
     <p class="slogan">Твій путівник у світі книг та затишку.</p>
     <p class="quote">Кімната без книг — все одно, що людина без душі.<br><span>(c) О.Довженко</span></p>
