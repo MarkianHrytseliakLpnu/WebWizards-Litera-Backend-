@@ -22,17 +22,20 @@
             <ul>
                 <li><a class="button-49" href="{% url 'home' %}">Головна</a></li>
                 <li><a href="#">Локації</a></li>
-                <li><a href="#">Відгуки</a></li>
                 <li><a href="{% url 'book' %}">Книги</a></li>
-                <li><a href="#">Оренда</a></li>
 
                 {% if user.is_authenticated %}
-                    <li>
-                        <a class="nav-username">
+                    <li class="user-menu">
+                        <a class="button-55 user-name">
                             {{ user.username }}
                         </a>
+                        <!-- Це список, який з’являється при наведенні -->
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'user_profile' %}">Профіль</a></li>
+                            <li><a href="{% url 'user_settings' %}">Налаштування</a></li>
+                            <li><a href="{% url 'logout' %}">Вийти</a></li>
+                        </ul>
                     </li>
-                    <li><a class="button-55" href="{% url 'logout' %}">ВИЙТИ</a></li>
                 {% else %}
                     <li><a class="button-55" href="{% url 'login' %}">УВІЙТИ</a></li>
                     <li><a class="button-54" href="{% url 'register' %}">ЗАРЕЄСТРУВАТИСЯ</a></li>

@@ -62,3 +62,65 @@ nav ul li a:hover {
     background-color: transparent;
     border-radius: 0;
 }
+
+/* Загальний контейнер для користувача */
+.user-menu {
+    position: relative; /* важливо для позиціонування випадаючого меню */
+    display: inline-block; /* щоб меню можна було відображати поруч з іншими <li> */
+}
+
+/* Оформлення нікнейму */
+.user-name {
+    /* потрібно змінити стилі для username (не тут) */
+    color: #ae1840;
+    text-decoration: none;
+    display: block;
+    padding: 6px 12px;
+}
+
+/* Сам випадаючий блок (список із посиланнями) */
+.dropdown-menu {
+    display: none;              /* приховано за замовчуванням */
+    position: absolute;         /* щоб можна було “випасти” нижче нікнейма */
+    top: 90%;                   /* розташування від верхнього краю user-menu */
+    right: 0;                   /* вирівнювання по правій стороні нікнейма */
+    background-color: #1b1b1b;
+    min-width: 120px;           /* ширина списку */
+    box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3); /* легка тінь */
+    border-radius: 5px;
+    z-index: 999;               /* щоб меню було поверх інших елементів */
+    margin-top: 0px;            /* невеликий відступ від нікнейма */
+    padding: 0;
+    list-style: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+/* Елементи списку всередині dropdown */
+.dropdown-menu li {
+    width: 100%;
+}
+
+/* Посилання всередині dropdown */
+.dropdown-menu li a {
+    display: block;
+    padding: 8px 12px;
+    color: #ae1840;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
+}
+
+/* Ховер по кожному пункту меню */
+.dropdown-menu li a:hover {
+    background-color: #0e0e0e;
+    transform: scale(0.98);
+}
+
+/* Коли курсор наводиться на .user-menu, показати список */
+.user-menu:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+}

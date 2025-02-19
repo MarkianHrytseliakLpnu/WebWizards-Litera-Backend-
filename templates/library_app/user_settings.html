@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="settings-container">
+    <h1>Налаштування профілю</h1>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Поля з нашої форми: username, first_name, last_name, email, phone_number -->
+        <div class="form-group">
+            <label for="id_username">Нікнейм:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="error">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_first_name">Ім'я:</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div class="error">{{ form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_last_name">Прізвище:</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div class="error">{{ form.last_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_phone_number">Номер телефону:</label>
+            {{ form.phone_number }}
+            {% if form.phone_number.errors %}
+                <div class="error">{{ form.phone_number.errors }}</div>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <!-- Зміна пароля -->
+        <h2>Змінити пароль</h2>
+        <small>Введіть старий пароль та новий, якщо бажаєте змінити.</small>
+
+        <div class="form-group">
+            <label for="id_old_password">Старий пароль:</label>
+            {{ form.old_password }}
+            {% if form.old_password.errors %}
+                <div class="error">{{ form.old_password.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_new_password1">Новий пароль:</label>
+            {{ form.new_password1 }}
+            {% if form.new_password1.errors %}
+                <div class="error">{{ form.new_password1.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_new_password2">Підтвердження нового пароля:</label>
+            {{ form.new_password2 }}
+            {% if form.new_password2.errors %}
+                <div class="error">{{ form.new_password2.errors }}</div>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn-save">Зберегти</button>
+    </form>
+</div>
+{% endblock %}

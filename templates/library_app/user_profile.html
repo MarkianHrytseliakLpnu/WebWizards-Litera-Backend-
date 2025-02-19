@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Мій профіль</h1>
+    <p><strong>Нікнейм:</strong> {{ request.user.username }}</p>
+    <p><strong>Ім'я:</strong> {{ request.user.first_name }}</p>
+    <p><strong>Прізвище:</strong> {{ request.user.last_name }}</p>
+    <p><strong>Email:</strong> {{ request.user.email }}</p>
+    <p><strong>Телефон:</strong> {{ request.user.phone_number }}</p>
+
+    <!-- Картинка-заглушка (оскільки аватара немає) -->
+
+    <a href="{% url 'user_settings' %}">Налаштування</a>
+{% endblock %}

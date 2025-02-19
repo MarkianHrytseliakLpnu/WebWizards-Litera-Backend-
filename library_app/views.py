@@ -8,8 +8,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from .forms import RegistrationForm, LoginForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from .forms import RegistrationForm, LoginForm, UserSettingsForm
 
 from .models import Book, TradeLog, Review
 from .serializers import BookSerializer, TradeLogSerializer, ReviewSerializer
@@ -68,6 +69,31 @@ def logout_view(request):
     logout(request)
     messages.success(request, "Ви вийшли із системи.")
     return redirect('home')
+
+
+@login_required
+def user_settings_view(request):
+    """
+    Сторінка налаштувань профілю: редагування Ім'я, Прізвище, Email,
+    телефон + можливість змінити пароль (старий + два рази новий).
+    """
+    if request.method == "POST":
+        form = UserSettingsForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Дані успішно оновлено!")
+            return redirect('user_settings')  # або на сторінку профілю / home
+        else:
+            messages.error(request, "Виправте помилки у формі, будь ласка.")
+    else:
+        form = UserSettingsForm(user=request.user)
+
+    return render(request, 'user_settings.html', {'form': form})
+
+
+@login_required
+def user_profile_view(request):
+    return render(request, 'user_profile.html')
 
 
 # ---------- Books Endpoints ----------
