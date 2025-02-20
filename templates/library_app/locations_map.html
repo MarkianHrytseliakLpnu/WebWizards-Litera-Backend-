@@ -49,7 +49,21 @@
             map.on('mouseenter', 'bookstores-layer', function (e) {
                 map.getCanvas().style.cursor = 'pointer';
                 const properties = e.features[0].properties;
-                infoTable.innerHTML = `<table border="1"><tr><th colspan="2">${properties.name}</th></tr><tr><td>📍 Адреса</td><td>${properties.address}</td></tr><tr><td>🕒 Графік</td><td>${properties.work_schedule}</td></tr></table>`;
+                infoTable.innerHTML = `<table border="1">
+                    <tr>
+                    <th colspan="2">${properties.name}</th></tr>
+                    <tr>
+                    <td>📍 Адреса</td>
+                    <td>${properties.address}</td></tr>
+                    <tr>
+                    <td>🕒 Графік</td>
+                    <td>${properties.work_schedule}</td></tr>
+                    <tr>
+                    <td>
+                        <a href="{{ properties.instagram_link }}" class="instagram-link">📷 Інстаграм</a>
+                    </td>
+                    <td><a href="http://127.0.0.1:8000/books/" class="book-link" >📚 Cписок книг</a></td></tr>
+                </table>`;
                 infoTable.style.display = 'block';
                 infoTable.style.left = `${e.point.x - 20}px`;
                 infoTable.style.top = `${e.point.y + 80}px`;
@@ -64,11 +78,23 @@
                 isClicked = !isClicked;  // Якщо вже відкрито, закриває, інакше відкриває
                 const properties = e.features[0].properties;
                 infoTable.innerHTML = `<table border="1">
-                    <tr><th colspan="2">${properties.name}</th></tr>
-                    <tr><td>📍 Адреса</td><td>${properties.address}</td></tr>
-                    <tr><td>🕒 Графік</td><td>${properties.work_schedule}</td></tr>
+                    <tr>
+                    <th colspan="2">${properties.name}</th></tr>
+                    <tr>
+                    <td>📍 Адреса</td>
+                    <td>${properties.address}</td></tr>
+                    <tr>
+                    <td>🕒 Графік</td>
+                    <td>${properties.work_schedule}</td></tr>
+                    <tr>
+                    <td>
+                        <a href="{{ properties.instagram_link }}" class="instagram-link">📷 Інстаграм</a>
+                    </td>
+                    <td><a href="http://127.0.0.1:8000/books/" class="book-link" >📚 Cписок книг</a></td></tr>
                 </table>`;
                 infoTable.style.display = isClicked ? 'block' : 'none';
+                infoTable.style.left = `${e.point.x - 20}px`;
+                infoTable.style.top = `${e.point.y + 80}px`;
             });
 
             document.getElementById('resetView').addEventListener('click', function () {
@@ -107,6 +133,22 @@
             border: 1px solid gray;
             border-radius: 5px;
             background: white;
+        }
+        a.instagram-link:link,
+        a.instagram-link:visited,
+        a.instagram-link:active,
+        a.instagram-link:hover {
+        color: white !important;
+        }
+        a.book-link:link,
+        a.book-link:visited,
+        a.book-link:active,
+        a.book-link:hover {
+        color: white !important;
+        }
+        td.col
+        {
+            width: 200px;
         }
     </style>
 {% endblock %}

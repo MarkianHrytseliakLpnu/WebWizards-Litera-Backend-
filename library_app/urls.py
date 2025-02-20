@@ -4,13 +4,13 @@ from .views import (
     ReviewListCreateView, ReviewDetailView,
     TradeLogListCreateView, TradeLogDetailView,
     HomeView, BooksView, register_view, login_view,
-    logout_view, LocationsView
+    logout_view, LocationsMapView
 )
-from library_app.services.location_service import LocationListCreateView, LocationDetailView
+from library_app.services.location_service import LocationListCreateView
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('books/', BooksView.as_view(), name='book'),
-    path('locations/', LocationsView.as_view(), name='locations'),
+    path('locations/', LocationsMapView.as_view(), name='locations_map'),
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
@@ -20,6 +20,5 @@ urlpatterns = [
     path('api/reviews/<int:pk>/', ReviewDetailView.as_view(), name='review-detail'),
     path('api/tradelogs/', TradeLogListCreateView.as_view(), name='tradelog-list-create'),
     path('api/tradelogs/<int:pk>/', TradeLogDetailView.as_view(), name='tradelog-detail'),
-    path('api/locations/', LocationListCreateView.as_view(), name='location-list-create'),
-    path('api/locations/<int:pk>/', LocationDetailView.as_view(), name='location-detail')
+    path('api/locations/', LocationListCreateView.as_view(), name='location-list-create')
 ]

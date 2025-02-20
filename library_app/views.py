@@ -31,6 +31,13 @@ class BooksView(View):
         return render(request, 'book.html', {'books': books})
 
 
+class LocationsMapView(View):
+    def get(self, request):
+        response = requests.get(request.build_absolute_uri('/api/locations/'))  # Отримуємо GeoJSON з API
+        geojson = response.json() if response.status_code == 200 else {}
+        return render(request, 'locations_map.html', {'geojson': json.dumps(geojson)})
+
+
 def register_view(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST, request.FILES)
@@ -190,11 +197,3 @@ class TradeLogDetailView(APIView):
         tradelog = get_object_or_404(TradeLog, pk=pk)
         tradelog.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class LocationsView(View):
-    def get(self, request):
-        response = requests.get(request.build_absolute_uri('/api/locations/'))  # Отримуємо GeoJSON з API
-        geojson = response.json() if response.status_code == 200 else {}
-
-        return render(request, 'locations.html', {'geojson': json.dumps(geojson)})
