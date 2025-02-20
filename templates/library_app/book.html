@@ -4,6 +4,8 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'library_app/css/book.css' %}">
+
+<div id="searchContainer">
     <form id="searchForm" method="GET" action="{% url 'book' %}">
     <input
         type="text"
@@ -15,6 +17,8 @@
     >
     <button type="submit">Пошук</button>
     </form>
+</div>
+
     <table>
         <thead>
             <tr>

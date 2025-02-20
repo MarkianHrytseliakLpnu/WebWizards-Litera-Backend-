@@ -1,115 +1,120 @@
 {% extends "base.html" %}
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'library_app/css/user_settings.css' %}">
 
-<h1>Налаштування профілю</h1>
+    <div class="profile-settings-container">
+        <h1>Налаштування профілю</h1>
 
-<form method="POST">
-  {% csrf_token %}
+        <form method="POST">
+            {% csrf_token %}
 
-  <div class="form-group">
-    <label for="id_username">Нікнейм:</label>
-    {{ form.username }}
-    {% if form.username.errors %}
-      <div class="error">{{ form.username.errors }}</div>
-    {% endif %}
-  </div>
+            <div class="form-group">
+                <label for="id_username">Нікнейм:</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div class="error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
 
-  <div class="form-group">
-    <label for="id_first_name">Ім'я:</label>
-    {{ form.first_name }}
-    {% if form.first_name.errors %}
-      <div class="error">{{ form.first_name.errors }}</div>
-    {% endif %}
-  </div>
+            <div class="form-group">
+                <label for="id_first_name">Ім'я:</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                <div class="error">{{ form.first_name.errors }}</div>
+                {% endif %}
+            </div>
 
-  <div class="form-group">
-    <label for="id_last_name">Прізвище:</label>
-    {{ form.last_name }}
-    {% if form.last_name.errors %}
-      <div class="error">{{ form.last_name.errors }}</div>
-    {% endif %}
-  </div>
+            <div class="form-group">
+                <label for="id_last_name">Прізвище:</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                <div class="error">{{ form.last_name.errors }}</div>
+                {% endif %}
+            </div>
 
-  <div class="form-group">
-    <label for="id_email">Email:</label>
-    {{ form.email }}
-    {% if form.email.errors %}
-      <div class="error">{{ form.email.errors }}</div>
-    {% endif %}
-  </div>
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
 
-  <div class="form-group">
-    <label for="id_phone_number">Телефон:</label>
-    {{ form.phone_number }}
-    {% if form.phone_number.errors %}
-      <div class="error">{{ form.phone_number.errors }}</div>
-    {% endif %}
-  </div>
+            <div class="form-group">
+                <label for="id_phone_number">Телефон:</label>
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                <div class="error">{{ form.phone_number.errors }}</div>
+                {% endif %}
+            </div>
 
-  <hr>
-  <h3>Соцмережі</h3>
-  <div class="form-group">
-    <label for="id_x_link">X:</label>
-    {{ form.x_link }}
-    {% if form.x_link.errors %}
-      <div class="error">{{ form.x_link.errors }}</div>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    <label for="id_instagram_link">Instagram:</label>
-    {{ form.instagram_link }}
-    {% if form.instagram_link.errors %}
-      <div class="error">{{ form.instagram_link.errors }}</div>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    <label for="id_telegram_link">Telegram:</label>
-    {{ form.telegram_link }}
-    {% if form.telegram_link.errors %}
-      <div class="error">{{ form.telegram_link.errors }}</div>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    <label for="id_facebook_link">Facebook:</label>
-    {{ form.facebook_link }}
-    {% if form.facebook_link.errors %}
-      <div class="error">{{ form.facebook_link.errors }}</div>
-    {% endif %}
-  </div>
+            <hr>
+            <h3>Соцмережі</h3>
+            <div class="form-group">
+                <label for="id_x_link">X:</label>
+                {{ form.x_link }}
+                {% if form.x_link.errors %}
+                <div class="error">{{ form.x_link.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_instagram_link">Instagram:</label>
+                {{ form.instagram_link }}
+                {% if form.instagram_link.errors %}
+                <div class="error">{{ form.instagram_link.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_telegram_link">Telegram:</label>
+                {{ form.telegram_link }}
+                {% if form.telegram_link.errors %}
+                <div class="error">{{ form.telegram_link.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_facebook_link">Facebook:</label>
+                {{ form.facebook_link }}
+                {% if form.facebook_link.errors %}
+                <div class="error">{{ form.facebook_link.errors }}</div>
+                {% endif %}
+            </div>
 
-  <hr>
-  <h3>Змінити пароль</h3>
-  <div class="form-group">
-    <label for="id_old_password">Старий пароль:</label>
-    {{ form.old_password }}
-    {% if form.old_password.errors %}
-      <div class="error">{{ form.old_password.errors }}</div>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    <label for="id_new_password1">Новий пароль:</label>
-    {{ form.new_password1 }}
-    {% if form.new_password1.errors %}
-      <div class="error">{{ form.new_password1.errors }}</div>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    <label for="id_new_password2">Підтвердження нового пароля:</label>
-    {{ form.new_password2 }}
-    {% if form.new_password2.errors %}
-      <div class="error">{{ form.new_password2.errors }}</div>
-    {% endif %}
-  </div>
+            <hr>
+            <h3>Змінити пароль</h3>
+            <div class="form-group">
+                <label for="id_old_password">Старий пароль:</label>
+                {{ form.old_password }}
+                {% if form.old_password.errors %}
+                <div class="error">{{ form.old_password.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_new_password1">Новий пароль:</label>
+                {{ form.new_password1 }}
+                {% if form.new_password1.errors %}
+                <div class="error">{{ form.new_password1.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_new_password2">Підтвердження нового пароля:</label>
+                {{ form.new_password2 }}
+                {% if form.new_password2.errors %}
+                <div class="error">{{ form.new_password2.errors }}</div>
+                {% endif %}
+            </div>
 
-  <button type="submit" class="btn-save">Зберегти</button>
-</form>
+            <button type="submit" class="btn-save">Зберегти</button>
+        </form>
 
-    {% if messages %}
-        <hr>
-        <p>info tab:</p>
-        {% for message in messages %}
+        {% if messages %}
+
+        <div class="info-tab">
+            {% for message in messages %}
             <div class="alert">{{ message }}</div>
-        {% endfor %}
+            {% endfor %}
+        </div>
         <hr>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}
