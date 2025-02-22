@@ -26,7 +26,7 @@ class LocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Location
-        fields = ['id', 'name', 'address', 'work_schedule', 'latitude', 'longitude', 'geojson']
+        fields = ['id', 'name', 'address', 'work_schedule', 'latitude', 'longitude', 'geojson','instagram_link']
 
     def get_geojson(self, obj):
         return {
@@ -34,7 +34,8 @@ class LocationSerializer(serializers.ModelSerializer):
             "properties": {
                 "name": obj.name,
                 "address": obj.address,
-                "work_schedule": obj.work_schedule
+                "work_schedule": obj.work_schedule,
+                "instagram_link": obj.instagram_link
             },
             "geometry": {
                 "type": "Point",
