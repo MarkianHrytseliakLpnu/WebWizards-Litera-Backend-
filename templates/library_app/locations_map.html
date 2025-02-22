@@ -19,6 +19,7 @@
         map.addControl(new mapboxgl.GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: true }));
 
         var geojson = {{ geojson|safe }};
+        let isClicked = false;
 
         map.on('load', function () {
 
@@ -44,38 +45,38 @@
             });
 
             const infoTable = document.getElementById('info-table');
-            let isClicked = false;
 
             map.on('mouseenter', 'bookstores-layer', function (e) {
-                map.getCanvas().style.cursor = 'pointer';
-                const properties = e.features[0].properties;
-                infoTable.innerHTML = `<table border="1">
-                    <tr>
-                    <th colspan="2">${properties.name}</th></tr>
-                    <tr>
-                    <td>📍 Адреса</td>
-                    <td>${properties.address}</td></tr>
-                    <tr>
-                    <td>🕒 Графік</td>
-                    <td>${properties.work_schedule}</td></tr>
-                    <tr>
-                    <td>
-                        <a href="{{ properties.instagram_link }}" class="instagram-link">📷 Інстаграм</a>
-                    </td>
-                    <td><a href="http://127.0.0.1:8000/books/" class="book-link" >📚 Cписок книг</a></td></tr>
-                </table>`;
-                infoTable.style.display = 'block';
-                infoTable.style.left = `${e.point.x - 20}px`;
-                infoTable.style.top = `${e.point.y + 80}px`;
-            });
 
-            map.on('mouseleave', 'bookstores-layer', function () {
-                map.getCanvas().style.cursor = 'pointer';
-                infoTable.style.display = 'none';
+                    infoTable.style.display = 'block';
+
+
+                    map.getCanvas().style.cursor = 'pointer';
+                    const properties = e.features[0].properties;
+                    infoTable.innerHTML = `<table border="1">
+                        <tr>
+                        <th colspan="2">${properties.name}</th></tr>
+                        <tr>
+                        <td>📍 Адреса</td>
+                        <td>${properties.address}</td></tr>
+                        <tr>
+                        <td>🕒 Графік</td>
+                        <td>${properties.work_schedule}</td></tr>
+                        <tr>
+                        <td>
+                        <img src="{% static 'library_app/images/instagram_icon.png' %}" alt="Instagram Icon" style="width: 15px; height: 15px; vertical-align: middle;">
+                        <a href="${properties.instagram_link}" target="_blank" class="instagram-link">Інстаграм</a>
+                        </td>
+                        <td><a href="http://127.0.0.1:8000/books/" class="book-link" >📚 Cписок книг</a></td></tr>
+                    </table>`;
+                    infoTable.style.display = 'block';
+                    infoTable.style.left = `${e.point.x }px`;
+                    infoTable.style.top = `${e.point.y - 85}px`;
+
             });
 
             map.on('click', 'bookstores-layer', function (e) {
-                isClicked = !isClicked;  // Якщо вже відкрито, закриває, інакше відкриває
+                infoTable.style.display = 'none';
                 const properties = e.features[0].properties;
                 infoTable.innerHTML = `<table border="1">
                     <tr>
@@ -88,13 +89,13 @@
                     <td>${properties.work_schedule}</td></tr>
                     <tr>
                     <td>
-                        <a href="{{ properties.instagram_link }}" class="instagram-link">📷 Інстаграм</a>
+                    <img src="{% static 'library_app/images/instagram_icon.png' %}" alt="Instagram Icon" style="width: 15px; height: 15px; vertical-align: middle;">
+                    <a href="${properties.instagram_link}" target="_blank" class="instagram-link">Інстаграм</a>
                     </td>
                     <td><a href="http://127.0.0.1:8000/books/" class="book-link" >📚 Cписок книг</a></td></tr>
                 </table>`;
-                infoTable.style.display = isClicked ? 'block' : 'none';
-                infoTable.style.left = `${e.point.x - 20}px`;
-                infoTable.style.top = `${e.point.y + 80}px`;
+                infoTable.style.left = `${e.point.x + 20}px`;
+                infoTable.style.top = `${e.point.y - 80}px`;
             });
 
             document.getElementById('resetView').addEventListener('click', function () {
@@ -107,50 +108,7 @@
         });
     </script>
 
-    <style>
-        #map {
-            width: 97%;
-            height: 600px;
-            margin: 20px;
-        }
-        .info-table {
-            position: absolute;
-            background: none;
-            padding: 5px;
-            display: none;
-            z-index: 10;
-            font-size: 12px;
-            border-radius: 5px;
-            max-width: 300px;
-        }
-        #resetView {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-            padding: 5px;
-            font-size: 14px;
-            border: 1px solid gray;
-            border-radius: 5px;
-            background: white;
-        }
-        a.instagram-link:link,
-        a.instagram-link:visited,
-        a.instagram-link:active,
-        a.instagram-link:hover {
-        color: white !important;
-        }
-        a.book-link:link,
-        a.book-link:visited,
-        a.book-link:active,
-        a.book-link:hover {
-        color: white !important;
-        }
-        td.col
-        {
-            width: 200px;
-        }
-    </style>
+
 {% endblock %}
 
 
