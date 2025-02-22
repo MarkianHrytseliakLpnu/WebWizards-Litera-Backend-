@@ -2,6 +2,23 @@
 {% block title %}Книги{% endblock %}
 {% block header %}Список Книг{% endblock %}
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'library_app/css/book.css' %}">
+
+<div id="searchContainer">
+    <form id="searchForm" method="GET" action="{% url 'book' %}">
+    <input
+        type="text"
+        id="searchInput"
+        name="q"
+        placeholder="Введіть назву книги, автора або жанр..."
+        value="{{ query|default_if_none:'' }}"
+        autocomplete="off"
+    >
+    <button type="submit">Пошук</button>
+    </form>
+</div>
+
     <table>
         <thead>
             <tr>

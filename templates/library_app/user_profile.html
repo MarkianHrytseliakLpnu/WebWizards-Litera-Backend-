@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'library_app/css/user_page.css' %}">
+    <!-- Логотипи соц-мереж -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="profile-wrapper">
+    <div class="profile-container">
+        <h1 class="profile-heading">Мій профіль</h1>
+        <!-- Аватарка юзера, поки що з файлу. -->
+        <div class="user-pic">
+            <img src="{% static 'library_app/images/avatars/power-headset.jpg' %}" class="img" alt="User-Profile-Image">
+        </div>
+        <div class="profile-info">
+            <p><strong>Нікнейм:</strong> {{ request.user.username }}</p>
+            <p><strong>Ім'я:</strong> {{ request.user.first_name }}</p>
+            <p><strong>Прізвище:</strong> {{ request.user.last_name }}</p>
+            <p><strong>Email:</strong> {{ request.user.email }}</p>
+            <p><strong>Телефон:</strong> {{ request.user.phone_number }}</p>
+        </div>
+        <hr>
+        <div class="social-section">
+        <h3>Соцмережі</h3>
+        <div class="social-icons">
+            {% if request.user.x_link %}
+                <a href="{{ request.user.x_link }}" target="_blank" class="social-icon">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            {% endif %}
+
+            {% if request.user.instagram_link %}
+                <a href="{{ request.user.instagram_link }}" target="_blank" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            {% endif %}
+
+            {% if request.user.telegram_link %}
+                <a href="{{ request.user.telegram_link }}" target="_blank" class="social-icon">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            {% endif %}
+
+            {% if request.user.facebook_link %}
+                <a href="{{ request.user.facebook_link }}" target="_blank" class="social-icon">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+        <div class="settings-link">
+            <a href="{% url 'user_settings' %}">Налаштування</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

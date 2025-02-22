@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.views import View
 
+from .search_utils import search_books
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,7 +11,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from .forms import RegistrationForm, LoginForm
+from django.contrib.auth.decorators import login_required
+from .forms import RegistrationForm, LoginForm, UserSettingsForm
 
 from .models import Book, TradeLog, Review
 from .serializers import BookSerializer, TradeLogSerializer, ReviewSerializer
@@ -27,8 +30,13 @@ class HomeView(View):
 
 class BooksView(View):
     def get(self, request):
-        books = Book.objects.all()
-        return render(request, 'book.html', {'books': books})
+        query = request.GET.get('q', '').strip()
+        books = search_books(query)
+
+        return render(request, 'book.html', {
+            'books': books,
+            'query': query,
+        })
 
 
 class LocationsMapView(View):
@@ -77,6 +85,27 @@ def logout_view(request):
     logout(request)
     messages.success(request, "Ви вийшли із системи.")
     return redirect('home')
+
+
+@login_required
+def user_settings_view(request):
+    if request.method == "POST":
+        form = UserSettingsForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Дані успішно оновлено!")
+            return redirect('user_profile')
+        else:
+            messages.error(request, "Виправте помилки у формі, будь ласка.")
+    else:
+        form = UserSettingsForm(user=request.user)
+
+    return render(request, 'user_settings.html', {'form': form})
+
+
+@login_required
+def user_profile_view(request):
+    return render(request, 'user_profile.html')
 
 
 # ---------- Books Endpoints ----------

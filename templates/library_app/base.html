@@ -5,15 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}LITERA - Твій путівник у світі книг{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'library_app/css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'library_app/css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'library_app/css/hero.css' %}">
     <link rel="stylesheet" href="{% static 'library_app/css/header.css' %}">
     <link rel="stylesheet" href="{% static 'library_app/css/buttons.css' %}">
-    <link rel="stylesheet" href="{% static 'library_app/css/book.css' %}">
     <link rel="stylesheet" href="{% static 'library_app/css/map.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/footer.css' %}">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet" />
+
 </head>
 <body>
     <header>
@@ -24,17 +23,20 @@
             <ul>
                 <li><a class="button-49" href="{% url 'home' %}">Головна</a></li>
                 <li><a href="{% url 'locations_map' %}">Локації</a></li>
-                <li><a href="#">Відгуки</a></li>
                 <li><a href="{% url 'book' %}">Книги</a></li>
-                <li><a href="#">Оренда</a></li>
 
                 {% if user.is_authenticated %}
-                    <li>
-                        <a class="nav-username">
+                    <li class="user-menu">
+                        <a class="button-55 user-name">
                             {{ user.username }}
                         </a>
+                        <!-- Це список, який з’являється при наведенні -->
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'user_profile' %}">Профіль</a></li>
+                            <li><a href="{% url 'user_settings' %}">Налаштування</a></li>
+                            <li><a href="{% url 'logout' %}">Вийти</a></li>
+                        </ul>
                     </li>
-                    <li><a class="button-55" href="{% url 'logout' %}">ВИЙТИ</a></li>
                 {% else %}
                     <li><a class="button-55" href="{% url 'login' %}">УВІЙТИ</a></li>
                     <li><a class="button-54" href="{% url 'register' %}">ЗАРЕЄСТРУВАТИСЯ</a></li>

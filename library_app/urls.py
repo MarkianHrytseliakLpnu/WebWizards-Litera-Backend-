@@ -3,8 +3,8 @@ from .views import (
     BookListCreateView, BookDetailView,
     ReviewListCreateView, ReviewDetailView,
     TradeLogListCreateView, TradeLogDetailView,
-    HomeView, BooksView, register_view, login_view,
-    logout_view, LocationsMapView
+    HomeView, BooksView, register_view, login_view,LocationsMapView,
+    logout_view, user_settings_view, user_profile_view
 )
 from library_app.services.location_service import LocationListCreateView
 urlpatterns = [
@@ -14,6 +14,8 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('settings/', user_settings_view, name='user_settings'),
+    path('profile/', user_profile_view, name='user_profile'),
     path('api/books/', BookListCreateView.as_view(), name='book-list-create'),
     path('api/books/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
     path('api/reviews/', ReviewListCreateView.as_view(), name='review-list-create'),

@@ -5,7 +5,17 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class CustomUser(AbstractUser):
-    phone_number = models.CharField(max_length=20, blank=True)
+    username = models.CharField(max_length=150, unique=True, null=False, blank=False)
+    email = models.EmailField(unique=True, null=False, blank=False)
+    first_name = models.CharField(max_length=150, null=False, blank=False)
+    last_name = models.CharField(max_length=150, null=False, blank=False)
+
+    phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
+
+    x_link = models.URLField(unique=True, blank=True, null=True)
+    instagram_link = models.URLField(unique=True, blank=True, null=True)
+    telegram_link = models.URLField(unique=True, blank=True, null=True)
+    facebook_link = models.URLField(unique=True, blank=True, null=True)
 
     def __str__(self):
         full_name = self.get_full_name()
