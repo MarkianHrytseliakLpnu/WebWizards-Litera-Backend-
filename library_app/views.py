@@ -104,8 +104,22 @@ def user_settings_view(request):
 
 @login_required
 def user_profile_view(request):
-    return render(request, 'user_profile.html')
+    edit_mode = False
+    if request.method == 'POST':
+        if 'edit_mode' in request.POST:
+            edit_mode = True
+        elif 'username' in request.POST:
+            # Оновлення профілю
+            request.user.username = request.POST['username']
+            request.user.first_name = request.POST['first_name']
+            request.user.last_name = request.POST['last_name']
+            request.user.email = request.POST['email']
+            request.user.phone_number = request.POST['phone_number']
+            request.user.save()
+            messages.success(request, 'Ваш профіль було успішно оновлено!')
+            return redirect('user_profile')
 
+    return render(request, 'user_profile.html', {'edit_mode': edit_mode})
 
 # ---------- Books Endpoints ----------
 
