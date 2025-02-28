@@ -9,7 +9,6 @@ from .views import (
 
 urlpatterns = [
     path('autocomplete/books/', AutocompleteBooksView.as_view(), name='autocomplete_books'),
-
     path('', HomeView.as_view(), name='home'),
     path('books/', BooksView.as_view(), name='book'),
     path('register/', register_view, name='register'),
