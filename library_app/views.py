@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views import View
 
 from .search_utils import search_books
+from .search_utils import autocomplete_books
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -37,6 +38,12 @@ class BooksView(View):
             'query': query,
         })
 
+class AutocompleteBooksView(View):
+    def get(self, request):
+        query = request.GET.get('q', '').strip()
+        suggestions = autocomplete_books(query)  # Використовуємо search_utils
+
+        return JsonResponse(suggestions, safe=False)
 
 def register_view(request):
     if request.method == "POST":

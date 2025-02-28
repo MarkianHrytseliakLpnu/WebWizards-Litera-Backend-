@@ -31,3 +31,16 @@ def search_books(query):
     return books.filter(final_q).distinct()
 
 
+def autocomplete_books(query):
+    """ Повертає список назв книг для автодоповнення """
+    query = query.strip()
+    if not query:
+        return []
+
+    books = Book.objects.filter(
+        Q(name__icontains=query) |
+        Q(authors__full_name__icontains=query) |
+        Q(categories__name__icontains=query)
+    ).distinct()[:10]  # Обмежуємо до 10 результатів
+
+    return list(books.values_list('name', flat=True))
