@@ -1,7 +1,6 @@
 /* BASIC */
 html {
   background-color: #000000;
-  overflow: hidden;
 }
 
 * {
@@ -10,7 +9,7 @@ html {
 
 body {
   font-family: "Poppins", "Courier New", monospace;
-  height: 100vh;
+  height: 100%;
   color: #fff;
 }
 
@@ -49,12 +48,12 @@ a:hover {
 
 .wrapper {
   display: flex;
-  align-items: center;
+  justify-content: center; /* Центрування по горизонталі */
+  align-items: center; /* Центрування по вертикалі */
   flex-direction: column;
-  justify-content: center;
+  padding: 10px;
   width: 100%;
-  min-height: 100%;
-  padding: 205px;
+  min-height: calc(100vh - 130px);
   background-color: #000000;
   background-image: url('../images/log_back.jpg');
 }
