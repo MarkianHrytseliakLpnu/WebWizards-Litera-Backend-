@@ -51,38 +51,13 @@
     </table>
     {% block extra_js %}
 <!-- Підключаємо jQuery та jQuery UI -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
 <script>
-$(document).ready(function() {
-    console.log("✅ Автодоповнення підключено");
-
-    $("#searchInput").autocomplete({
-        source: function(request, response) {
-            console.log("🔍 Надсилаємо запит: " + request.term);
-            $.ajax({
-                url: "{% url 'autocomplete_books' %}",
-                data: { q: request.term },
-                dataType: "json",
-                success: function(data) {
-                    console.log("📌 Отримані дані:", data);
-                    response(data);
-                },
-                error: function(xhr, status, error) {
-                    console.error("❌ Помилка запиту:", status, error);
-                }
-            });
-        },
-        minLength: 1,
-        select: function(event, ui) {
-            $("#searchInput").val(ui.item.value);
-            $("#searchForm").submit();
-        }
-    });
-});
+    var autocompleteUrl = "{% url 'autocomplete_books' %}";
 </script>
+<script src="{% static 'library_app/js/autocomplete.js' %}"></script>
 {% endblock %}
 
 {% endblock %}
