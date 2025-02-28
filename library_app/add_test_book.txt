@@ -1,0 +1,41 @@
+python manage.py shell
+
+from library_app.models import Country, Author, Publishing, Category, Book
+
+# Створення країни
+ukraine, _ = Country.objects.get_or_create(name="Україна")
+
+# Створення авторів
+authors_data = [
+    ("Тарас Шевченко", "1814-03-09"),
+    ("Леся Українка", "1871-02-25"),
+    ("Іван Франко", "1856-08-27"),
+    ("Михайло Коцюбинський", "1864-09-17"),
+]
+authors = {name: Author.objects.get_or_create(full_name=name, date_of_birth=dob, country=ukraine)[0] for name, dob in authors_data}
+
+# Створення видавництва
+publishing, _ = Publishing.objects.get_or_create(name="Видавництво 'Українська книга'", country=ukraine)
+
+# Створення категорій
+cat_poetry, _ = Category.objects.get_or_create(name="Поезія")
+cat_prose, _ = Category.objects.get_or_create(name="Проза")
+
+# Створення книг
+books_data = [
+    ("Кобзар", 1840, "Українська", 240, [authors["Тарас Шевченко"]], [cat_poetry]),
+    ("Лісова пісня", 1911, "Українська", 120, [authors["Леся Українка"]], [cat_poetry]),
+    ("Захар Беркут", 1883, "Українська", 200, [authors["Іван Франко"]], [cat_prose]),
+    ("Тіні забутих предків", 1911, "Українська", 190, [authors["Михайло Коцюбинський"]], [cat_prose]),
+]
+
+for name, year, lang, pages, auths, cats in books_data:
+    book, created = Book.objects.get_or_create(
+        name=name, year_of_publication=year, language=lang, number_of_pages=pages, publishing=publishing
+    )
+    book.authors.set(auths)
+    book.categories.set(cats)
+    book.save()
+
+print("✅ 20 книжок додано!")
+exit()
