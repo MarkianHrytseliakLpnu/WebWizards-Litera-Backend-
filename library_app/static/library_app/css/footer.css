@@ -1,8 +1,12 @@
 footer {
     text-align: center;
-    padding: 49px;
     background-color: #0e0e0e;
     color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
 }
 
 .social-links {

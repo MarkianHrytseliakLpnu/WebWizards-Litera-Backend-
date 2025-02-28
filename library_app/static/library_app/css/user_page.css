@@ -2,9 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: radial-gradient(ellipse at center, #fff, #000000);
-    padding: 20px;
+    min-height: 100%;
+    width: 100%;
+    padding: 100px;
+    background-image: url("../images/log_back.jpg");
 }
 
 .profile-container {
@@ -31,6 +32,7 @@
     font-size: 18px;
     color: #fff;
     margin-bottom: 10px;
+    padding: 5px;
 }
 
 .social-icons {
@@ -52,15 +54,15 @@
     color: #6b1a30;
 }
 
-.settings-link a {
+.settings-link a, button, btn-cancel {
   font-family: 'Courier New', monospace;
   font-size: 16px;
   letter-spacing: 2px;
   text-decoration: none;
   text-transform: uppercase;
-  color: #ae1840;
+  color: silver;
   cursor: pointer;
-  border: 3px solid #ae1840;
+  border: 3px solid gray;
   padding: 0.25em 0.5em;
   box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
   position: relative;
@@ -69,20 +71,44 @@
   touch-action: manipulation;
   border-radius: 7px;
   transition: transform 0.3s ease;
+  margin: 20px 0;
+  background-color: transparent;
+  text-align: center;
 }
 
-.settings-link a:active {
+.settings-link a:active, button:active {
   box-shadow: 0 0 0 0;
   top: 5px;
   left: 5px;
 }
 
 @media (min-width: 768px) {
-  .settings-link a {
+  .settings-link a, button:active {
     padding: 0.25em 0.75em;
   }
 }
 
-.settings-link a:hover {
+.settings-link a:hover, button:hover {
   transform: scale(1.01);
+}
+
+.form-control {
+  width: 250px;
+  padding: 0 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  border: 0;
+  margin-bottom: 0;
+  border-radius: 50px;
+  background-color: gray;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #ae1840;
+  outline: none;
+}
+
+html {
+    overflow: hidden;
 }
