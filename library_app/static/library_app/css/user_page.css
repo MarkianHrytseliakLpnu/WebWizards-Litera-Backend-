@@ -1,10 +1,10 @@
 .profile-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100%;
+    justify-content: center; /* Центрування по горизонталі */
+    align-items: center; /* Центрування по вертикалі */
+    min-height: calc(100vh - 130px); /* Мінімальна висота, що відповідає висоті екрану */
     width: 100%;
-    padding: 100px;
+    padding: 10px;
     background-image: url("../images/log_back.jpg");
 }
 
@@ -107,8 +107,4 @@
 .form-control:focus {
   border-color: #ae1840;
   outline: none;
-}
-
-html {
-    overflow: hidden;
 }
