@@ -67,7 +67,8 @@ tr:hover {
 }
 
 #searchInput:focus {
-    border-color: #6b1a30;
+    border-color: #2e2e2e;
+    background-color: dimgray;
     outline: none;
 }
 

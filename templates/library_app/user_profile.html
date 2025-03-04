@@ -2,6 +2,7 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'library_app/css/user_page.css' %}">
+    <link rel="stylesheet" href="{% static 'library_app/css/sidebar.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <div class="profile-wrapper">
@@ -15,35 +16,45 @@
                     {% csrf_token %}
                     <p><strong>Нікнейм:</strong>
                         {% if edit_mode %}
-                            <input type="text" name="username" value="{{ request.user.username }}" class="form-control" />
+                            <label>
+                                <input type="text" name="username" value="{{ request.user.username }}" class="form-control" />
+                            </label>
                         {% else %}
                             {{ request.user.username }}
                         {% endif %}
                     </p>
                     <p><strong>Ім'я:</strong>
                         {% if edit_mode %}
-                            <input type="text" name="first_name" value="{{ request.user.first_name }}" class="form-control" />
+                            <label>
+                                <input type="text" name="first_name" value="{{ request.user.first_name }}" class="form-control" />
+                            </label>
                         {% else %}
                             {{ request.user.first_name }}
                         {% endif %}
                     </p>
                     <p><strong>Прізвище:</strong>
                         {% if edit_mode %}
-                            <input type="text" name="last_name" value="{{ request.user.last_name }}" class="form-control" />
+                            <label>
+                                <input type="text" name="last_name" value="{{ request.user.last_name }}" class="form-control" />
+                            </label>
                         {% else %}
                             {{ request.user.last_name }}
                         {% endif %}
                     </p>
                     <p><strong>Email:</strong>
                         {% if edit_mode %}
-                            <input type="email" name="email" value="{{ request.user.email }}" class="form-control" />
+                            <label>
+                                <input type="email" name="email" value="{{ request.user.email }}" class="form-control" />
+                            </label>
                         {% else %}
                             {{ request.user.email }}
                         {% endif %}
                     </p>
                     <p><strong>Телефон:</strong>
                         {% if edit_mode %}
-                            <input type="text" name="phone_number" value="{{ request.user.phone_number }}" class="form-control" />
+                            <label>
+                                <input type="text" name="phone_number" value="{{ request.user.phone_number }}" class="form-control" />
+                            </label>
                         {% else %}
                             {{ request.user.phone_number }}
                         {% endif %}
@@ -90,4 +101,41 @@
             </div>
         </div>
     </div>
+
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Соціальні зв'язки</h2>
+        </div>
+        <div class="sidebar-tabs">
+            <button class="tab-link active" data-tab="friends-tab">
+                <img src="{% static 'library_app/images/socialbar/friengs_icon.png' %}" alt="Друзі">
+            </button>
+            <button class="tab-link" data-tab="blocked-tab">
+                <img src="{% static 'library_app/images/socialbar/blocked_icon.png' %}" alt="Заблоковані">
+            </button>
+            <button class="tab-link" data-tab="requests-tab">
+                <img src="{% static 'library_app/images/socialbar/invitation_icon.png' %}" alt="Запити">
+            </button>
+            <button class="tab-link" data-tab="search-tab">
+                <img src="{% static 'library_app/images/socialbar/search_icon.png' %}" alt="Пошук">
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <div id="friends-tab" class="tab-content active">
+                <p>Завантаження друзів...</p>
+            </div>
+            <div id="blocked-tab" class="tab-content">
+                <p>Завантаження заблокованих...</p>
+            </div>
+            <div id="requests-tab" class="tab-content">
+                <p>Завантаження запитів...</p>
+            </div>
+            <div id="search-tab" class="tab-content">
+                <label for="user-search"></label><input type="text" id="user-search" placeholder="Пошук за username">
+                <div id="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'library_app/js/sidebar.js' %}"></script>
 {% endblock %}
