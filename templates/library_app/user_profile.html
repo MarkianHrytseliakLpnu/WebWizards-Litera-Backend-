@@ -77,18 +77,15 @@
                         </div>
                     </div>
 
-
-
                     {% if edit_mode %}
-                        <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+                        <button type="submit" class="btn-accept">Зберегти зміни</button>
                         <button href="{% url 'user_profile' %}" class="btn-cancel">Скасувати</button>
                     {% else %}
-                        <button type="submit" name="edit_mode" class="btn btn-secondary">Редагувати</button>
+                        <button type="submit" name="edit_mode" class="edit-button">
+                            <img src="{% static 'library_app/images/edit-icon-png-3602.png' %}" alt="Редагувати" width="30" height="30">
+                        </button>
                     {% endif %}
 
-                    <div class="settings-link">
-                        <a href="{% url 'user_settings' %}">Налаштування конфіденційності</a>
-                    </div>
                 </form>
             </div>
         </div>
