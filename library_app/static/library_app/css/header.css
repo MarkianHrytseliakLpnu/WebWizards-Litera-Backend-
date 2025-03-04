@@ -87,9 +87,9 @@ nav ul li a:hover {
     background-color: #1b1b1b;
     min-width: 120px;           /* ширина списку */
     box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3); /* легка тінь */
-    border-radius: 5px;
+    border-radius: 7px;
     z-index: 999;               /* щоб меню було поверх інших елементів */
-    margin-top: 0px;            /* невеликий відступ від нікнейма */
+    margin-top: 0;            /* невеликий відступ від нікнейма */
     padding: 0;
     list-style: none;
     opacity: 0;
@@ -108,14 +108,13 @@ nav ul li a:hover {
     padding: 8px 12px;
     color: #ae1840;
     text-decoration: none;
-    transition: background-color 0.2s ease;
     border-radius: 5px;
 }
 
 /* Ховер по кожному пункту меню */
 .dropdown-menu li a:hover {
     background-color: #0e0e0e;
-    transform: scale(0.98);
+    transform: none; /* Remove the scale transformation */
 }
 
 /* Коли курсор наводиться на .user-menu, показати список */
