@@ -82,6 +82,7 @@ class Book(models.Model):
     language = models.CharField(max_length=50)
     number_of_pages = models.PositiveIntegerField()
     categories = models.ManyToManyField('Category', related_name='books')
+    locations = models.ManyToManyField('Location', related_name='books')
 
     def __str__(self):
         return self.name
