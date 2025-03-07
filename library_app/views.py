@@ -2,11 +2,10 @@ from django.shortcuts import get_object_or_404
 from django.views import View
 
 from .search_utils import search_books
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .search_utils import autocomplete_books
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.db.models import Q
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -14,13 +13,14 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm, LoginForm, UserSettingsForm
 
-from .models import Book, TradeLog, Review
-from .serializers import BookSerializer, TradeLogSerializer, ReviewSerializer
+from .models import Friendship
 from django.contrib.auth import get_user_model
 import json
 import requests
 
 User = get_user_model()
+
+default_avatar = "/static/library_app/images/avatars/default_avatar.png"
 
 
 class HomeView(View):
@@ -44,6 +44,14 @@ class LocationsMapView(View):
         response = requests.get(request.build_absolute_uri('/api/locations/'))  # Отримуємо GeoJSON з API
         geojson = response.json() if response.status_code == 200 else {}
         return render(request, 'locations_map.html', {'geojson': json.dumps(geojson)})
+
+
+class AutocompleteBooksView(View):
+    def get(self, request):
+        query = request.GET.get('q', '').strip()
+        suggestions = autocomplete_books(query)
+
+        return JsonResponse(suggestions, safe=False)
 
 
 def register_view(request):
@@ -79,9 +87,6 @@ def login_view(request):
 
 
 def logout_view(request):
-    """
-    View для виходу користувача із системи.
-    """
     logout(request)
     messages.success(request, "Ви вийшли із системи.")
     return redirect('home')
@@ -105,124 +110,141 @@ def user_settings_view(request):
 
 @login_required
 def user_profile_view(request):
-    return render(request, 'user_profile.html')
+    edit_mode = False
+    if request.method == 'POST':
+        if 'edit_mode' in request.POST:
+            edit_mode = True
+        elif 'username' in request.POST:
+            # Оновлення профілю
+            request.user.username = request.POST['username']
+            request.user.first_name = request.POST['first_name']
+            request.user.last_name = request.POST['last_name']
+            request.user.email = request.POST['email']
+            request.user.phone_number = request.POST['phone_number']
+            request.user.save()
+            messages.success(request, 'Ваш профіль було успішно оновлено!')
+            return redirect('user_profile')
+
+    return render(request, 'user_profile.html', {'edit_mode': edit_mode})
 
 
-# ---------- Books Endpoints ----------
+@require_POST
+@login_required
+def send_friend_request_ajax(request):
+    user_id = request.POST.get('user_id')
+    if not user_id:
+        return JsonResponse({'success': False, 'error': 'Не вказано ID користувача.'})
 
-class BookListCreateView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    recipient = get_object_or_404(User, pk=user_id)
 
-    def get(self, request):
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
-        return Response(serializer.data)
+    # Переконуємося, що не надсилається запит самому собі
+    if recipient == request.user:
+        return JsonResponse({'success': False, 'error': 'Неможливо надіслати запит самому собі.'})
 
-    def post(self, request):
-        serializer = BookSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class BookDetailView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request, pk):
-        book = get_object_or_404(Book, pk=pk)
-        serializer = BookSerializer(book)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        book = get_object_or_404(Book, pk=pk)
-        serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        book = get_object_or_404(Book, pk=pk)
-        book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    friendship, created = Friendship.objects.get_or_create(user_from=request.user, user_to=recipient)
+    if created:
+        return JsonResponse({'success': True, 'message': 'Запит на дружбу відправлено.'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Запит на дружбу вже існує.'})
 
 
-# ---------- Reviews Endpoints ----------
+@require_POST
+@login_required
+def respond_friend_request_ajax(request):
+    friendship_id = request.POST.get('friendship_id')
+    action = request.POST.get('action')  # очікуємо 'accept', 'decline' або 'block'
 
-class ReviewListCreateView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    if not friendship_id or not action:
+        return JsonResponse({'success': False, 'error': 'Недостатньо даних.'})
 
-    def get(self, request):
-        reviews = Review.objects.all()
-        serializer = ReviewSerializer(reviews, many=True)
-        return Response(serializer.data)
+    friendship = get_object_or_404(Friendship, pk=friendship_id, user_to=request.user)
 
-    def post(self, request):
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if action == 'accept':
+        friendship.status = Friendship.FriendshipStatus.ACCEPTED
+        msg = 'Запит прийнято.'
+    elif action == 'decline':
+        friendship.status = Friendship.FriendshipStatus.DECLINED
+        msg = 'Запит відхилено.'
+    elif action == 'block':
+        friendship.status = Friendship.FriendshipStatus.BLOCKED
+        msg = 'Користувача заблоковано.'
+    else:
+        return JsonResponse({'success': False, 'error': 'Невідомий тип дії.'})
 
-
-class ReviewDetailView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request, pk):
-        review = get_object_or_404(Review, pk=pk)
-        serializer = ReviewSerializer(review)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        review = get_object_or_404(Review, pk=pk)
-        serializer = ReviewSerializer(review, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        review = get_object_or_404(Review, pk=pk)
-        review.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    friendship.save()
+    return JsonResponse({'success': True, 'message': msg})
 
 
-# ---------- Rent (TradeLog) Endpoints ----------
+@login_required
+def ajax_friends(request):
+    """
+    Повертає список друзів (Friendship з статусом ACCEPTED).
+    """
+    accepted_friendships = Friendship.objects.filter(
+        status=Friendship.FriendshipStatus.ACCEPTED
+    ).filter(
+        Q(user_from=request.user) | Q(user_to=request.user)
+    )
+    friends = []
+    for friendship in accepted_friendships:
+        friend = friendship.user_to if friendship.user_from == request.user else friendship.user_from
+        friends.append({
+            'id': friend.id,
+            'username': friend.username,
+            'first_name': friend.first_name,
+            'last_name': friend.last_name,
+            'avatar': friend.avatar.url if hasattr(friend, 'avatar') and friend.avatar else default_avatar
+        })
+    return JsonResponse({'results': friends})
 
-class TradeLogListCreateView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+@login_required
+def ajax_blocked(request):
+    blocked_friendships = Friendship.objects.filter(
+        user_from=request.user,
+        status=Friendship.FriendshipStatus.BLOCKED
+    )
+    blocked = []
+    for friendship in blocked_friendships:
+        blocked.append({
+            'id': friendship.user_to.id,
+            'username': friendship.user_to.username,
+            'first_name': friendship.user_to.first_name,
+            'last_name': friendship.user_to.last_name,
+            'avatar': friendship.user_to.avatar.url if hasattr(friendship.user_to, 'avatar') and friendship.user_to.avatar else default_avatar
+        })
+    return JsonResponse({'results': blocked})
 
-    def get(self, request):
-        tradelogs = TradeLog.objects.all()
-        serializer = TradeLogSerializer(tradelogs, many=True)
-        return Response(serializer.data)
+@login_required
+def ajax_friend_requests(request):
+    friend_requests = Friendship.objects.filter(
+        user_to=request.user,
+        status=Friendship.FriendshipStatus.PENDING
+    )
+    requests_list = []
+    for friendship in friend_requests:
+        requests_list.append({
+            'id': friendship.id,
+            'username': friendship.user_from.username,
+            'first_name': friendship.user_from.first_name,
+            'last_name': friendship.user_from.last_name,
+            'avatar': friendship.user_from.avatar.url if hasattr(friendship.user_from, 'avatar') and friendship.user_from.avatar else default_avatar
+        })
+    return JsonResponse({'results': requests_list})
 
-    def post(self, request):
-        serializer = TradeLogSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class TradeLogDetailView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request, pk):
-        tradelog = get_object_or_404(TradeLog, pk=pk)
-        serializer = TradeLogSerializer(tradelog)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        tradelog = get_object_or_404(TradeLog, pk=pk)
-        serializer = TradeLogSerializer(tradelog, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        tradelog = get_object_or_404(TradeLog, pk=pk)
-        tradelog.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+@login_required
+def ajax_search_users(request):
+    q = request.GET.get('q', '')
+    if q:
+        users = User.objects.filter(username__icontains=q).exclude(id=request.user.id)[:10]
+    else:
+        users = User.objects.none()
+    results = []
+    for user in users:
+        results.append({
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'avatar': user.avatar.url if hasattr(user, 'avatar') and user.avatar else default_avatar
+        })
+    return JsonResponse({'results': results})

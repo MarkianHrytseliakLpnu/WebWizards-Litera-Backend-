@@ -5,14 +5,6 @@ body {
     font-size: 16px;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #0e0e0e;
-}
-
 .logo-container {
     background-color: #1b1b1b;
     padding: 10px 15px;
@@ -60,10 +52,10 @@ tr:hover {
 
 #searchInput {
     font-family: 'Courier New', monospace;
-    width: 400px;
+    width: 500px;
     padding: 10px;
-    border-radius: 5px;
-    border: 5px solid #3c3c3c;
+    border-radius: 50px;
+    border: 0;
     font-size: 16px;
     margin-right: 10px;
     background-color: gray;
@@ -75,7 +67,8 @@ tr:hover {
 }
 
 #searchInput:focus {
-    border-color: #6b1a30;
+    border-color: #2e2e2e;
+    background-color: dimgray;
     outline: none;
 }
 
@@ -85,7 +78,7 @@ button[type="submit"] {
     background-color: #ae1840;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
     font-size: 16px;
 }

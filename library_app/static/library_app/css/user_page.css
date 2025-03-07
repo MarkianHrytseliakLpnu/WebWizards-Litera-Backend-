@@ -1,10 +1,11 @@
 .profile-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: radial-gradient(ellipse at center, #fff, #000000);
-    padding: 20px;
+    justify-content: center; /* Центрування по горизонталі */
+    align-items: center; /* Центрування по вертикалі */
+    min-height: calc(100vh - 130px); /* Мінімальна висота, що відповідає висоті екрану */
+    width: 100%;
+    padding: 10px;
+    background-image: url("../images/log_back.jpg");
 }
 
 .profile-container {
@@ -31,6 +32,7 @@
     font-size: 18px;
     color: #fff;
     margin-bottom: 10px;
+    padding: 5px;
 }
 
 .social-icons {
@@ -52,37 +54,70 @@
     color: #6b1a30;
 }
 
-.settings-link a {
+.form-control {
+  width: 250px;
+  padding: 0 10px;
   font-family: 'Courier New', monospace;
   font-size: 16px;
-  letter-spacing: 2px;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #ae1840;
+  border: 0;
+  margin-bottom: 0;
+  border-radius: 50px;
+  background-color: gray;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #ae1840;
+  outline: none;
+}
+
+.edit-button {
+    background: none;
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 5px 2px 5px;
+}
+
+.edit-button:hover {
+    background-color: rgba(77, 77, 77, 0.6);
+}
+
+.btn-accept, .btn-cancel {
+  align-items: center;
+  appearance: none;
+  background-image: linear-gradient(1deg, #3c3c3c, #737373 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
   cursor: pointer;
-  border: 3px solid #ae1840;
-  padding: 0.25em 0.5em;
-  box-shadow: 1px 1px 0 0, 2px 2px 0 0, 3px 3px 0 0, 4px 4px 0 0;
+  display: inline-flex;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 15px;
   position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  border-radius: 7px;
-  transition: transform 0.3s ease;
+  vertical-align: top;
+  white-space: nowrap;
 }
 
-.settings-link a:active {
-  box-shadow: 0 0 0 0;
-  top: 5px;
-  left: 5px;
+.btn-accept:active,
+.btn-accept:focus,
+.btn-cancel:active,
+.btn-cancel:focus {
+  outline: none;
 }
 
-@media (min-width: 768px) {
-  .settings-link a {
-    padding: 0.25em 0.75em;
-  }
-}
-
-.settings-link a:hover {
-  transform: scale(1.01);
+.btn-accept:hover, .btn-cancel:hover {
+  background-position: -20px -20px;
 }

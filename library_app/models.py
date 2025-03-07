@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
@@ -20,6 +21,38 @@ class CustomUser(AbstractUser):
     def __str__(self):
         full_name = self.get_full_name()
         return full_name if full_name else self.username
+
+
+class Friendship(models.Model):
+    class FriendshipStatus(models.TextChoices):
+        PENDING = 'P', 'Pending'
+        ACCEPTED = 'A', 'Accepted'
+        DECLINED = 'D', 'Declined'
+        BLOCKED = 'B', 'Blocked'
+
+    user_from = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='friendships_sent'
+    )
+    user_to = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='friendships_received'
+    )
+    status = models.CharField(
+        max_length=1,
+        choices=FriendshipStatus.choices,
+        default=FriendshipStatus.PENDING
+    )
+    created = models.DateTimeField(default=timezone.now)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('user_from', 'user_to')
+
+    def __str__(self):
+        return f"Friendship from {self.user_from} to {self.user_to} ({self.get_status_display()})"
 
 
 class Location(models.Model):

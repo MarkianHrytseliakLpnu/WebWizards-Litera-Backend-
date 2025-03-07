@@ -17,4 +17,16 @@ header {
     align-items: center;
     padding: 20px;
     background-color: #0e0e0e;
+    height: 65px; /* Висота футера */
+}
+
+footer {
+    text-align: center;
+    background-color: #0e0e0e;
+    color: #fff;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    height: 65px;
 }
