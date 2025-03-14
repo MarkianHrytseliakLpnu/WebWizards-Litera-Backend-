@@ -15,6 +15,8 @@ from .forms import RegistrationForm, LoginForm, UserSettingsForm
 
 from .models import Friendship
 from django.contrib.auth import get_user_model
+import json
+import requests
 
 User = get_user_model()
 
@@ -35,6 +37,13 @@ class BooksView(View):
             'books': books,
             'query': query,
         })
+
+
+class LocationsMapView(View):
+    def get(self, request):
+        response = requests.get(request.build_absolute_uri('/api/locations/'))  # Отримуємо GeoJSON з API
+        geojson = response.json() if response.status_code == 200 else {}
+        return render(request, 'locations_map.html', {'geojson': json.dumps(geojson)})
 
 
 class AutocompleteBooksView(View):

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 
 
@@ -58,6 +59,17 @@ class Location(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
     work_schedule = models.CharField(max_length=100)
+    longitude = models.DecimalField(
+        max_digits=18,  # 3 знаки перед комою + 15 після коми
+        decimal_places=15,
+        validators=[MinValueValidator(-180), MaxValueValidator(180)]
+    )
+    latitude = models.DecimalField(
+        max_digits=17,  # 2 знаки перед комою + 15 після коми
+        decimal_places=15,
+        validators=[MinValueValidator(-90), MaxValueValidator(90)]
+    )
+    instagram_link = models.URLField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -103,6 +115,7 @@ class Book(models.Model):
     language = models.CharField(max_length=50)
     number_of_pages = models.PositiveIntegerField()
     categories = models.ManyToManyField('Category', related_name='books')
+    locations = models.ManyToManyField('Location', related_name='books')
 
     def __str__(self):
         return self.name
@@ -128,3 +141,4 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review by {self.user} for {self.book}"
+

@@ -1,0 +1,126 @@
+/* Контейнер, що обгортає карту і блок зі списком книг */
+.map-container {
+    display: flex;            /* Робимо flex-контейнер */
+    flex-direction: row;      /* Розташовуємо елементи горизонтально */
+    width: 100%;              /* Ширина на всю сторінку */
+    height: 600px;            /* Висота - як вам зручно */
+}
+
+/* Ліва колонка з картою */
+#map {
+    width: 63%;               /* Залишаємо, як було, або змініть за бажанням */
+    height: 100%;
+    margin-left: 20px;        /* Можна прибрати/змінити */
+}
+
+/* Права колонка для списку книг */
+#bookList {
+    width: 37%;               /* Щоб разом з картою було 100% */
+    background: #2c2c2c;        /* Чорний фон, як просили */
+    color: white;             /* Білий текст */
+    display: block;            /* Приховано за замовчуванням */
+    padding: 10px;
+    overflow-y: auto;         /* Прокрутка, якщо контенту багато */
+    margin-left: 10px;        /* Невеликий відступ від карти */
+    border-radius: 5px;
+}
+
+.info-table {
+    position: absolute;
+    background: black;
+    padding: 10px;
+    display: none;
+    z-index: 10;
+    font-size: 12px;
+    border-radius: 5px;
+    max-width: 350px;
+    max-height: 500px;
+}
+
+#bookList h2 {
+    color: #ea0e46;
+    margin-top: 0;
+}
+
+#searchContainer {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #2c2c2c;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#searchForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchInput {
+    font-family: 'Courier New', monospace;
+    width: 400px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 5px solid #3c3c3c;
+    font-size: 16px;
+    margin-right: 10px;
+    background-color: gray;
+    color: #f0f0f0;
+}
+
+#searchInput::placeholder {
+    color: #fff;
+}
+
+#searchInput:focus {
+    border-color: #6b1a30;
+    outline: none;
+}
+
+button[type="submit"] {
+    font-family: 'Courier New', monospace;
+    padding: 10px 20px;
+    background-color: #ae1840;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #6b1a30;
+}
+
+a.instagram-link:link,
+a.instagram-link:visited,
+a.instagram-link:active,
+a.instagram-link:hover {
+    color: white !important;
+}
+
+a.book-link:link,
+a.book-link:visited,
+a.book-link:active,
+a.book-link:hover {
+    color: white !important;
+}
+
+.info-table.th, .info-table.td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.info-table.th {
+    background-color: #2c2c2c;
+    color: #ea0e46;
+}
+
+.info-table.tr:hover {
+    background-color: #333;
+}
+
+td
